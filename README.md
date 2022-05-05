@@ -7,11 +7,6 @@ Member 2 - IT20645052 - G.L.S.E.Liyanage (ShehanEraliyanage)
 Member 3 - IT20659158 - M.A.H.R.Nanayakkara (hirusha2577)
 Member 4 - IT20650070- Uditha R.H.I(uditha1998)
 
-Group Leader - IT20639112 - E.T.N.Perera (it20639112Thanu)
-Member 2 - IT20645052 - G.L.S.E.Liyanage (ShehanEraliyanage )
-Member 3 - IT20659158 - M.A.H.R.Nanayakkara (hirusha2577)
-Member 4 - IT20648954 - H.D.P.L.Gunasekara (hdplgunasekara)
-
 Brief Description of Project - 
 The “MACQUARIE UNIVERSITY” is an android app which helps the students of MACQUARIE UNIVERSITY to find an
 internship. It allows companies to register and post the job vacancies while the students are able to apply for preferred
