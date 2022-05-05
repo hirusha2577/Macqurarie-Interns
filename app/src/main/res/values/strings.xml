@@ -1,0 +1,104 @@
+<resources>
+    <string name="app_name">Macqurarie Interns</string>
+
+    <!--    StartActivity-->
+    <string name="admin_btn">Admin</string>
+    <string name="student_btn">Student</string>
+    <string name="company_btn">Company</string>
+
+
+    <!--    Student-->
+    <string name="student_login_form">Student Login</string>
+    <string name="student_register_form">Student Register</string>
+    <string name="student_name">Name With Initials</string>
+    <string name="student_id">Student ID</string>
+
+    <!--    Company-->
+    <string name="company_login_form">Company Login</string>
+    <string name="company_register_form">Company Register</string>
+    <string name="company_name">Company Name</string>
+    <string name="company_id">Company Register No</string>
+    <string name="company_type">Company Type</string>
+
+    <!--    AdminLoginActivity-->
+    <string name="admin_login_form">Admin Login</string>
+
+    <!-- commun -->
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="nic">NIC</string>
+    <string name="password">Password</string>
+    <string name="re_password">Reenter Password</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone No</string>
+    <string name="dob">Date Of Birth</string>
+    <string name="center">Center</string>
+    <string name="degree">Degree</string>
+    <string name="year">Year</string>
+    <string name="intake">Intake</string>
+    <string name="address">Address</string>
+
+    <string name="company1">Cobblestone Energy</string>
+    <string name="company2">Pearson</string>
+    <string name="company3">Siemens Gamesa</string>
+    <string name="company4">Virtusa</string>
+    <string name="company5">IFS</string>
+    <string name="company6">99X</string>
+    <string name="company7">Info</string>
+    <string name="company8">Code</string>
+    <string name="company9">new Tech</string>
+    <string name="company10">MMC</string>
+
+    <string name="student1">Hirusha Ravishan</string>
+    <string name="student2">Gayan Chameera</string>
+    <string name="student3">Kalana mathisha</string>
+    <string name="student4">Dilini Dahanayaka</string>
+    <string name="student5">Isiwara Uditha</string>
+    <string name="student6">Tanushi Perera</string>
+    <string name="student7">Chandunila Sankani</string>
+    <string name="student8">Ravish Gamage</string>
+    <string name="student9">Shehan Karunarathna</string>
+    <string name="student10">Asini Nisansala</string>
+
+    <string name="category1">Information Technology</string>
+    <string name="category2">Automation Technology</string>
+    <string name="category3">Wood Related</string>
+    <string name="category4">Textile and Garments</string>
+    <string name="category5">Hotel and Tourism</string>
+    <string name="category6">Food Technology</string>
+    <string name="category7">Fisheries and Aquaculture</string>
+    <string name="category8">Electrical and Electronic and Telecommunication</string>
+    <string name="category9">Automobile Repair and Maintenance </string>
+    <string name="category10">Agriculture Plantation and Livestock</string>
+
+    <string name="company_register_request">Company Register Request</string>
+    <string name="manage_company">Manage Company</string>
+    <string name="manage_student">Manage Student</string>
+    <string name="manage_job_category">Manage Job category</string>
+
+    <string name="company_registration_report">Company Registration Report</string>
+    <string name="student_influence_report">Student Influence Report</string>
+    <string name="vacancy_influence_report">Vacancy Influence Report</string>
+    <string name="student_registration_report">Student Registration Report</string>
+
+
+
+    <!-- about-->
+    <string name="about">Virtusa Corporation is a global provider of Digital Business Transformation, Digital Engineering, and Information Technology (IT) outsourcing services that accelerate our clients’ journey to their Digital Future. Virtusa serves Global 2000 companies in Banking, Financial Services, Insurance, Healthcare, Telecommunications, Media, Entertainment, Travel, Manufacturing, and Technology industrie.
+    Virtusa engages its clients to re-imagine their business models and develop strategies to defend and grow their business by introducing innovative products and services, developing distinctive digital consumer experiences, creating operational efficiency using digital labor, developing operational and IT platforms for the future, and rationalizing and modernizing their existing IT applications infrastructure. As a result, its clients are simultaneously able to drive business growth through digital-first customer experiences, while also consolidating and modernizing their IT application infrastructure to support digital business transformation.</string>
+    <string name="website">Website : http://www.virtusa.com</string>
+    <string name="industry">Industry : Information Technology And Services</string>
+    <string name="company_size">Company size : +1000 Employees</string>
+
+
+
+
+
+
+    <string name="job_details">Responsibilities Listed below are the typical duties and responsibilities expected of an individual for the job title described in this document. The items specified below are a guideline of the minimum expectations for the job title; changes will be made on a case-by-case basis for individuals who show potential to take on more responsibilities.</string>
+
+    <string name="job_details2">Qualifications Education / Experiencendividual should be following a Bachelors degree in Computing or Information Technology/Management. Individuals who are following a Bachelors degree in Mathematics, Physical Sciences, or a specialization in the Engineering field will also be considered.</string>
+
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".StartActivity">
+
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="210dp"
+        android:layout_height="210dp"
+        android:src="@drawable/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/logo"
+        android:layout_width="match_parent"
+        android:paddingRight="50dp"
+        android:paddingLeft="50dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center">
+
+
+        <Button
+            android:id="@+id/student_btn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/start_button"
+            android:text="@string/student_btn"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/company_btn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/start_button"
+            android:layout_below="@+id/student_btn"
+            android:text="@string/company_btn"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/admin_btn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/company_btn"
+            android:background="@drawable/start_button"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/admin_btn"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_marginBottom="10dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

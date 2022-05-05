@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".AdminMainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/register_req"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="-45dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="30dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/admin_main_btn">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Company Register Request"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textAlignment="textStart"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/company"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginLeft="-45dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="30dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/admin_main_btn">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Manage Company"
+                android:textColor="@color/black"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="20dp"
+                android:textSize="16sp"
+                android:textAlignment="textStart"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/student"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="-45dp"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/admin_main_btn">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Manage Student"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textAlignment="textStart"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginLeft="-45dp"
+            android:layout_marginRight="30dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/admin_main_btn">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Manage Job category"
+                android:textColor="@color/black"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="20dp"
+                android:textSize="16sp"
+                android:textAlignment="textStart"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/silver_line"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Report"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"/>
+
+        <RelativeLayout
+            android:id="@+id/report1"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="-45dp"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/admin_main_btn">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Company Registration Report"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="80dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textAlignment="textStart"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/report2"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="-45dp"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/admin_main_btn">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Student Influence Report"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="80dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textAlignment="textStart"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/report3"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="-45dp"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/admin_main_btn">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vacancy Influence Report"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="80dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textAlignment="textStart"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/report4"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="-45dp"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/admin_main_btn">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Student Registration Report"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="80dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textAlignment="textStart"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

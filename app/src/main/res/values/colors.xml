@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#801A1A</color>
+    <color name="colorPrimaryDark">#830505</color>
+    <color name="colorAccent">#830505</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="silver">#939292</color>
+    <color name="silver_light">#E2E2E2</color>
+    <color name="icon_color">#FF959595</color>
+    <color name="orange">#FF5722</color>
+    <color name="purple">#E9B561E2</color>
+    <color name="silver_line">#71D2D2D2</color>
+    <color name="green">#4CAF50</color>
+
+</resources>
