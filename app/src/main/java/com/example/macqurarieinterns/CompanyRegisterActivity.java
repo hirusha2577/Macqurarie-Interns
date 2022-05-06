@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.macqurarieinterns.Function.Validation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -93,6 +94,10 @@ public class CompanyRegisterActivity extends AppCompatActivity {
 
                 if(TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_register_no) || TextUtils.isEmpty(txt_address) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_phone) || TextUtils.isEmpty(txt_password1) || TextUtils.isEmpty(txt_password2) || TextUtils.isEmpty(txt_type) ) {
                     Toast.makeText(CompanyRegisterActivity.this, "All filed are required", Toast.LENGTH_SHORT).show();
+                } else if(!Validation.isValidEmailAddress(txt_email)) {
+                    Toast.makeText(CompanyRegisterActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();
+                } else if(!Validation.isValidMobileNumber(txt_phone)){
+                    Toast.makeText(CompanyRegisterActivity.this, "Enter valid phone number", Toast.LENGTH_SHORT).show();
                 } else if(!txt_password1.equals(txt_password2)){
                     Toast.makeText(CompanyRegisterActivity.this, "Password not mach", Toast.LENGTH_SHORT).show();
                 } else if (txt_password1.length() < 6){
