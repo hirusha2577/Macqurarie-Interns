@@ -14,8 +14,10 @@ import androidx.fragment.app.Fragment;
 import com.example.macqurarieinterns.JobCreateActivity;
 import com.example.macqurarieinterns.JobMoreDetailsActivity;
 import com.example.macqurarieinterns.R;
+import com.example.macqurarieinterns.StartActivity;
 import com.example.macqurarieinterns.StudentApplyActivity;
 import com.example.macqurarieinterns.StudentInterviewActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 /**
@@ -23,7 +25,7 @@ import com.example.macqurarieinterns.StudentInterviewActivity;
  */
 public class MenuFragment extends Fragment {
 
-    private RelativeLayout apply_list, interview_list;
+    private RelativeLayout apply_list, interview_list, logout;
 
     public MenuFragment() {
         // Required empty public constructor
@@ -37,6 +39,17 @@ public class MenuFragment extends Fragment {
 
         apply_list = view.findViewById(R.id.apply_list);
         interview_list = view.findViewById(R.id.interview_list);
+        logout = view.findViewById(R.id.logout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(), StartActivity.class);
+                startActivity(intent);
+            }
+        });
 
         apply_list.setOnClickListener(new View.OnClickListener() {
             @Override
