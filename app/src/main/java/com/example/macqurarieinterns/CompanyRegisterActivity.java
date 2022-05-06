@@ -96,14 +96,12 @@ public class CompanyRegisterActivity extends AppCompatActivity {
                     Toast.makeText(CompanyRegisterActivity.this, "All filed are required", Toast.LENGTH_SHORT).show();
                 } else if(!Validation.isValidEmailAddress(txt_email)) {
                     Toast.makeText(CompanyRegisterActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();
-                } else if(!Validation.isValidMobileNumber(txt_phone)){
-                    Toast.makeText(CompanyRegisterActivity.this, "Enter valid phone number", Toast.LENGTH_SHORT).show();
                 } else if(!txt_password1.equals(txt_password2)){
                     Toast.makeText(CompanyRegisterActivity.this, "Password not mach", Toast.LENGTH_SHORT).show();
                 } else if (txt_password1.length() < 6){
                     Toast.makeText(CompanyRegisterActivity.this, "Password must be least 6 characters", Toast.LENGTH_SHORT).show();
                 }else {
-                    register(txt_name, txt_register_no, txt_address, txt_email, txt_phone, txt_password1, txt_type);
+                    companyRegister(txt_name, txt_register_no, txt_address, txt_email, txt_phone, txt_password1, txt_type);
                 }
 
 
@@ -118,7 +116,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void register(final String name, final String register_no, final String address, final String email, final String phone, final String password1, final String type) {
+    private void companyRegister(final String name, final String register_no, final String address, final String email, final String phone, final String password1, final String type) {
         auth.createUserWithEmailAndPassword(email,password1)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
