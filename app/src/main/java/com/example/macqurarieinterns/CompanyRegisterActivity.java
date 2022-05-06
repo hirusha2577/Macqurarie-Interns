@@ -43,6 +43,8 @@ public class CompanyRegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_register);
 
+        auth = FirebaseAuth.getInstance();
+
         name = findViewById(R.id.name);
         register_no = findViewById(R.id.register_no);
         address = findViewById(R.id.address);
