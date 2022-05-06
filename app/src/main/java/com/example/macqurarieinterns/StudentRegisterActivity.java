@@ -9,6 +9,9 @@ import android.widget.RelativeLayout;
 
 import static com.example.macqurarieinterns.Function.MyIntent.moveActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class StudentRegisterActivity extends AppCompatActivity {
 
     private ImageButton back_btn, register_btn;
@@ -33,6 +36,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 moveActivity(StudentRegisterActivity.this,MainActivity.class);
             }
         });
@@ -40,6 +44,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 moveActivity(StudentRegisterActivity.this,StudentLoginActivity.class);
             }
         });
