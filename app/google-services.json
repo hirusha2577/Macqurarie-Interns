@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "838235493028",
+    "project_id": "macqurarie-interns",
+    "storage_bucket": "macqurarie-interns.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838235493028:android:93b161489f97d33b69cc31",
+        "android_client_info": {
+          "package_name": "com.example.macqurarieinterns"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "838235493028-q4tkf6e70cmv2dfpo3v02s6kpvefrva0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpVZKDQGpoUiyhom1NOAxzqZYzGw3Rdz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "838235493028-q4tkf6e70cmv2dfpo3v02s6kpvefrva0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
