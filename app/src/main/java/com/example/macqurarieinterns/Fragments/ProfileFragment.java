@@ -25,8 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.example.macqurarieinterns.CompanyAboutActivity;
-import com.example.macqurarieinterns.CompanyEditProfileActivity;
+import com.example.macqurarieinterns.AboutActivity;
 import com.example.macqurarieinterns.MainActivity;
 import com.example.macqurarieinterns.Model.Company;
 import com.example.macqurarieinterns.PostCreateActivity;
@@ -169,7 +168,7 @@ public class ProfileFragment extends Fragment  {
         about_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CompanyAboutActivity.class);
+                Intent intent = new Intent(getContext(), AboutActivity.class);
                 startActivity(intent);
             }
         });
@@ -274,7 +273,7 @@ public class ProfileFragment extends Fragment  {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    private  void uploard_P_Image(){
+    private  void upload_P_Image(){
         final ProgressDialog pd =new ProgressDialog(getContext());
         pd.setMessage("uploading");
         pd.show();
@@ -295,8 +294,8 @@ public class ProfileFragment extends Fragment  {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
-                            Uri downlodUri = task.getResult();
-                            String mUri = downlodUri.toString();
+                            Uri downloadUri = task.getResult();
+                            String mUri = downloadUri.toString();
                             databaseReference = FirebaseDatabase.getInstance().getReference("Company").child(firebaseUser.getUid());
                             HashMap<String, Object> map = new HashMap<>();
                             map.put("P_imageURL", mUri);
@@ -323,7 +322,7 @@ public class ProfileFragment extends Fragment  {
     }
 
 
-    private  void uploard_C_Image(){
+    private  void upload_C_Image(){
         final ProgressDialog pd =new ProgressDialog(getContext());
         pd.setMessage("uploading");
         pd.show();
@@ -346,8 +345,8 @@ public class ProfileFragment extends Fragment  {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
-                            Uri downlodUri = task.getResult();
-                            String mUri = downlodUri.toString();
+                            Uri downloadUri = task.getResult();
+                            String mUri = downloadUri.toString();
 
                             databaseReference = FirebaseDatabase.getInstance().getReference("Company").child(firebaseUser.getUid());
                             HashMap<String, Object> map = new HashMap<>();
@@ -386,7 +385,7 @@ public class ProfileFragment extends Fragment  {
             if (uploadTask != null && uploadTask.isInProgress()){
                 Toast.makeText(getContext(), "Upload is progress", Toast.LENGTH_SHORT).show();
             }else {
-                uploard_P_Image();
+                upload_P_Image();
 
             }
         }
@@ -397,7 +396,7 @@ public class ProfileFragment extends Fragment  {
             if (uploadTask != null && uploadTask.isInProgress()){
                 Toast.makeText(getContext(), "Upload is progress", Toast.LENGTH_SHORT).show();
             }else {
-                uploard_C_Image();
+                upload_C_Image();
             }
         }
     }

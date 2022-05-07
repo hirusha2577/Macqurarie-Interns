@@ -33,7 +33,7 @@
         <activity android:name=".JobCreateActivity" />
         <activity android:name=".PostCreateActivity" />
         <activity android:name=".CompanyEditProfileActivity" />
-        <activity android:name=".CompanyAboutActivity" />
+        <activity android:name=".AboutActivity" />
         <activity android:name=".AdminLoginActivity" />
         <activity android:name=".StudentRegisterActivity" />
         <activity
