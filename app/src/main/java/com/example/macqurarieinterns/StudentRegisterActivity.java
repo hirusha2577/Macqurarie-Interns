@@ -71,8 +71,8 @@ public class StudentRegisterActivity extends AppCompatActivity {
         login_btn = findViewById(R.id.login_btn);
         register_btn = findViewById(R.id.register_btn);
 
-        String[] center ={"Colombo","Kandy","Galle","Jaffna","Trincomalee","Anuradhapura"};
-        ArrayAdapter<String> centerTypes = new ArrayAdapter<String>(StudentRegisterActivity.this , android.R.layout.simple_dropdown_item_1line, center);
+        String[] centers ={"Colombo","Kandy","Galle","Jaffna","Trincomalee","Anuradhapura"};
+        ArrayAdapter<String> centerTypes = new ArrayAdapter<String>(StudentRegisterActivity.this , android.R.layout.simple_dropdown_item_1line, centers);
         center.setAdapter(centerTypes);
 
         center_dropdown.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +82,38 @@ public class StudentRegisterActivity extends AppCompatActivity {
             }
         });
 
+        String[] degrees ={"Bsc.(hons) Information Technology","Bsc.(hons) Business Administration","Bsc.(hons) Naval and Maritime Science","Bsc.(hons) Electronic Engineering","Bsc.(hons) Tourism Management","Bsc.(hons) Applied Science"};
+        ArrayAdapter<String> degreeTypes = new ArrayAdapter<String>(StudentRegisterActivity.this , android.R.layout.simple_dropdown_item_1line, degrees);
+        degree.setAdapter(degreeTypes);
+
+        course_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                degree .showDropDown();
+            }
+        });
+
+        /*String[] years ={"1st year","2nd year","3rd year","4th year"};
+        ArrayAdapter<String> yearTypes = new ArrayAdapter<String>(StudentRegisterActivity.this , android.R.layout.simple_dropdown_item_1line, years);
+        r_stud_year.setAdapter(yearTypes);
+
+        year_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                r_stud_year .showDropDown();
+            }
+        });*/
+
+        String[] intakes ={"2019","2020","2021","2022"};
+        ArrayAdapter<String> intakeTypes = new ArrayAdapter<String>(StudentRegisterActivity.this , android.R.layout.simple_dropdown_item_1line, intakes);
+        intake.setAdapter(intakeTypes);
+
+        batch_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intake .showDropDown();
+            }
+        });
 
 
         back_btn.setOnClickListener(new View.OnClickListener() {
@@ -102,8 +134,11 @@ public class StudentRegisterActivity extends AppCompatActivity {
                 String txt_password1 = password1.getText().toString();
                 String txt_password2 = password2.getText().toString();
                 String txt_center = center.getText().toString();
+                String txt_degree = degree.getText().toString();
+                String txt_r_stud_year = r_stud_year.getText().toString();
+                String txt_intake = intake.getText().toString();
 
-                if(TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_student_id) || TextUtils.isEmpty(txt_nic) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_phone) || TextUtils.isEmpty(txt_password1) || TextUtils.isEmpty(txt_password2) || TextUtils.isEmpty(txt_center) ) {
+                if(TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_student_id) || TextUtils.isEmpty(txt_nic) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_phone) || TextUtils.isEmpty(txt_password1) || TextUtils.isEmpty(txt_password2) || TextUtils.isEmpty(txt_center) || TextUtils.isEmpty(txt_degree) || TextUtils.isEmpty(txt_r_stud_year)  || TextUtils.isEmpty(txt_intake) ) {
                     Toast.makeText(StudentRegisterActivity.this, "All filed are required", Toast.LENGTH_SHORT).show();
                 } else if(!Validation.isValidEmailAddress(txt_email)) {
                     Toast.makeText(StudentRegisterActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();
@@ -113,9 +148,8 @@ public class StudentRegisterActivity extends AppCompatActivity {
                     Toast.makeText(StudentRegisterActivity.this, "Password not mach", Toast.LENGTH_SHORT).show();
                 } else if (txt_password1.length() < 6){
                     Toast.makeText(StudentRegisterActivity.this, "Password must be least 6 characters", Toast.LENGTH_SHORT).show();
-                }else {
-                    register(txt_name, txt_student_id, txt_nic, txt_email, txt_phone, txt_password1, txt_center);
-                }
+                }else
+                    register(txt_name, txt_student_id, txt_nic, txt_email, txt_phone, txt_password1, txt_center, txt_degree, txt_r_stud_year, txt_intake);
 
 
             }
@@ -130,7 +164,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void register(final String name, final String student_id, final String nic, final String email, final String phone, final String password1, final String center) {
+    private void register(final String name, final String student_id, final String nic, final String email, final String phone, final String password1, final String center, final String degree, final String r_stud_year, final String intake) {
         auth.createUserWithEmailAndPassword(email,password1)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -139,16 +173,18 @@ public class StudentRegisterActivity extends AppCompatActivity {
                             FirebaseUser firebaseUser=auth.getCurrentUser();
                             String companyId = firebaseUser.getUid();
 
-                            reference = FirebaseDatabase.getInstance().getReference("Student").child();
+                            reference = FirebaseDatabase.getInstance().getReference("Student").child(student_id);
 
                             HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put("id", companyId);
                             hashMap.put("student_id",student_id);
                             hashMap.put("name",name);
                             hashMap.put("nic", nic);
                             hashMap.put("email", email);
                             hashMap.put("phone", phone);
                             hashMap.put("center", center);
+                            hashMap.put("degree", degree);
+                            hashMap.put("r_stud_year", r_stud_year);
+                            hashMap.put("intake", intake);
                             hashMap.put("status", "0");
                             hashMap.put("P_imageURL", "default");
                             hashMap.put("C_imageURL", "default");
@@ -174,4 +210,3 @@ public class StudentRegisterActivity extends AppCompatActivity {
 }
 
 
-}
