@@ -37,6 +37,7 @@
                     android:src="@mipmap/cover" />
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/c_image_change"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
@@ -47,7 +48,7 @@
                     app:cardCornerRadius="50dp">
 
                     <ImageView
-                        android:id="@+id/c_image_change"
+                        android:id="@+id/cc_image_change"
                         android:layout_width="50px"
                         android:layout_height="50px"
                         android:padding="3dp"
