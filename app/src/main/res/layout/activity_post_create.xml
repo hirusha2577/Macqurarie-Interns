@@ -35,7 +35,7 @@
 
         <ImageView
             android:id="@+id/postImage"
-            android:visibility="visible"
+            android:visibility="gone"
             android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
 
         <LinearLayout
             android:layout_gravity="center"
-            android:id="@+id/post_add2"
+            android:id="@+id/image_choose"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:paddingLeft="10dp"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_gravity="center"
-                android:text="Photo"
+                android:text="Select Image"
                 android:textColor="#C1000000"
                 android:textStyle="bold"/>
         </LinearLayout>

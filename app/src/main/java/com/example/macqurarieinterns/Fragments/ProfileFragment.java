@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment  {
     private RelativeLayout about_btn, edit_btn;
     private ImageButton moreBtn;
     private CardView post_add1, p_image_change, c_image_change;
-    private TextView name;
+    private TextView name, type;
     private CircleImageView profile_image;
     private ImageView cover_image;
 
@@ -99,6 +99,7 @@ public class ProfileFragment extends Fragment  {
         c_image_change = view.findViewById(R.id.c_image_change);
 
         name = view.findViewById(R.id.name);
+        type = view.findViewById(R.id.type);
         profile_image = view.findViewById(R.id.profile_image);
         cover_image = view.findViewById(R.id.cover_image);
 
@@ -121,6 +122,7 @@ public class ProfileFragment extends Fragment  {
                     userType = "company";
                     Company company = dataSnapshot.getValue(Company.class);
                     name.setText(company.getName());
+                    type.setText(company.getType());
                     if (company.getP_imageURL().equals("default")){
                         profile_image.setImageResource(R.mipmap.ic_launcher);
                     }else {
