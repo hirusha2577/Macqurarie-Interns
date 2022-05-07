@@ -24,10 +24,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.macqurarieinterns.AboutActivity;
+import com.example.macqurarieinterns.Adapter.PostAdapter;
 import com.example.macqurarieinterns.MainActivity;
 import com.example.macqurarieinterns.Model.Company;
+import com.example.macqurarieinterns.Model.Post;
 import com.example.macqurarieinterns.Model.Student;
 import com.example.macqurarieinterns.PostCreateActivity;
 import com.example.macqurarieinterns.R;
@@ -42,6 +46,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -49,7 +54,9 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -77,6 +84,12 @@ public class ProfileFragment extends Fragment  {
     private static String userType;
 
     private DatabaseReference databaseReference, databaseReference2;
+
+    List<Post> postList;
+    RecyclerView recyclerview_posts;
+    PostAdapter postAdapter;
+    String uid;
+
 
     public ProfileFragment() {
     }
@@ -201,34 +214,34 @@ public class ProfileFragment extends Fragment  {
         });
 
 
-        moreBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(getContext(),view);
-                popupMenu.inflate(R.menu.post_popup);
-                popupMenu.show();
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.edit_post:
-                                Intent intent = new Intent(getContext(), PostCreateActivity.class);
-//                intent.putExtra("company_id", u_id);
-                                startActivity(intent);
-                                return true;
-
-                            case R.id.delete_post:
-                                Intent intent1 = new Intent(getContext(), MainActivity.class);
-//                intent.putExtra("company_id", u_id);
-                                startActivity(intent1);
-                                return true;
-
-                        }
-                        return false;
-                    }
-                });
-            }
-        });
+//        moreBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                PopupMenu popupMenu = new PopupMenu(getContext(),view);
+//                popupMenu.inflate(R.menu.post_popup);
+//                popupMenu.show();
+//                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem menuItem) {
+//                        switch (menuItem.getItemId()) {
+//                            case R.id.edit_post:
+//                                Intent intent = new Intent(getContext(), PostCreateActivity.class);
+////                intent.putExtra("company_id", u_id);
+//                                startActivity(intent);
+//                                return true;
+//
+//                            case R.id.delete_post:
+//                                Intent intent1 = new Intent(getContext(), MainActivity.class);
+////                intent.putExtra("company_id", u_id);
+//                                startActivity(intent1);
+//                                return true;
+//
+//                        }
+//                        return false;
+//                    }
+//                });
+//            }
+//        });
 
 
         p_image_change.setOnClickListener(new View.OnClickListener() {
@@ -245,7 +258,17 @@ public class ProfileFragment extends Fragment  {
             }
         });
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        recyclerview_posts = view.findViewById(R.id.recyclerview_posts);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setStackFromEnd(true);
+        layoutManager.setReverseLayout(true);
+        recyclerview_posts.setLayoutManager(layoutManager);
 
+        postList = new ArrayList<>();
+
+        checkUserStatus();
+        loadMyPosts();
 
         return view;
     }
@@ -472,7 +495,44 @@ public class ProfileFragment extends Fragment  {
         }
     }
 
+    private void loadMyPosts() {
 
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+        Query query = reference.orderByChild("id").equalTo(uid);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Post myPost = snapshot.getValue(Post.class);
+
+                    //add to list
+                    postList.add(myPost);
+
+                    //adapter
+                    postAdapter = new PostAdapter(getActivity(), postList);
+                    //set this adapter torecycleview
+                    recyclerview_posts.setAdapter(postAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private  void checkUserStatus(){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+        } else {
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            getActivity().finish();
+        }
+
+    }
 
 
 }
