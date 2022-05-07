@@ -67,6 +67,7 @@ public class PostCreateActivity extends AppCompatActivity {
     String name, email, uid, udp;
 
     Uri image_rui = null;
+    private static String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,8 @@ public class PostCreateActivity extends AppCompatActivity {
             }
         });
 
+        userType = MainActivity.getUserType();
+
 
         //init permissions arrays
         cameraPermissions = new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -94,7 +97,12 @@ public class PostCreateActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         checkUserStatus();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Company");
+        if(userType.equals("company")){
+            databaseReference = FirebaseDatabase.getInstance().getReference("Company");
+        }else{
+            databaseReference = FirebaseDatabase.getInstance().getReference("Student");
+        }
+
         Query query = databaseReference.orderByChild("id").equalTo(uid);
         query.addValueEventListener(new ValueEventListener() {
             @Override
