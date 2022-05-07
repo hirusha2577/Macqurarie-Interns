@@ -371,7 +371,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/view12">
 
-                            <TextView
+                            <AutoCompleteTextView
                                 android:id="@+id/r_stud_year"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -382,11 +382,9 @@
                                 android:background="@android:color/transparent"
                                 android:drawableLeft="@drawable/ic_select_pen_silver"
                                 android:drawablePadding="20dp"
-                                android:hint="Year"
+                                android:hint="@string/year"
                                 android:inputType="text"
-                                android:padding="8dp"
-                                android:textColor="@color/black"
-                                android:textSize="18sp" />
+                                android:padding="8dp" />
 
                             <ImageButton
                                 android:id="@+id/year_dropdown"
