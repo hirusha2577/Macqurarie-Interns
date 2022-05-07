@@ -3,15 +3,21 @@ package com.example.macqurarieinterns;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +31,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 import static com.example.macqurarieinterns.Function.MyIntent.moveActivity;
@@ -35,12 +42,15 @@ public class StudentRegisterActivity extends AppCompatActivity {
     private DatabaseReference reference;
 
     private EditText name,student_id, nic,email, phone,password1, password2;
-    private TextView dob,r_stud_year;
+    private TextView dob;
+    private RadioButton male, female;
     private ImageButton date_dropdown,year_dropdown;
-    private AutoCompleteTextView center,degree,intake;
+    private AutoCompleteTextView center,degree,intake, r_stud_year;
     private ImageButton center_dropdown,course_dropdown,batch_dropdown;
     private ImageButton back_btn, register_btn;
     private RelativeLayout login_btn;
+
+    private DatePickerDialog.OnDateSetListener DateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +71,8 @@ public class StudentRegisterActivity extends AppCompatActivity {
         degree = findViewById(R.id.degree);
         r_stud_year = findViewById(R.id.r_stud_year);
         intake = findViewById(R.id.intake);
+        male = findViewById(R.id.male);
+        female = findViewById(R.id.female);
 
         date_dropdown = findViewById(R.id.date_dropdown);
         year_dropdown = findViewById(R.id.year_dropdown);
@@ -82,6 +94,40 @@ public class StudentRegisterActivity extends AppCompatActivity {
             }
         });
 
+
+
+        ///////////////////////////
+        date_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        StudentRegisterActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        DateSetListener,
+                        year, month, day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+        DateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String date = DateFormat.format("yyyy-MM-dd", calendar).toString();
+                dob.setText(date);
+            }
+        };
+
+        /////////////////////////////
+
         String[] degrees ={"Bsc.(hons) Information Technology","Bsc.(hons) Business Administration","Bsc.(hons) Naval and Maritime Science","Bsc.(hons) Electronic Engineering","Bsc.(hons) Tourism Management","Bsc.(hons) Applied Science"};
         ArrayAdapter<String> degreeTypes = new ArrayAdapter<String>(StudentRegisterActivity.this , android.R.layout.simple_dropdown_item_1line, degrees);
         degree.setAdapter(degreeTypes);
@@ -93,7 +139,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
             }
         });
 
-        /*String[] years ={"1st year","2nd year","3rd year","4th year"};
+        String[] years ={"1st year","2nd year","3rd year","4th year"};
         ArrayAdapter<String> yearTypes = new ArrayAdapter<String>(StudentRegisterActivity.this , android.R.layout.simple_dropdown_item_1line, years);
         r_stud_year.setAdapter(yearTypes);
 
@@ -102,7 +148,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 r_stud_year .showDropDown();
             }
-        });*/
+        });
 
         String[] intakes ={"2019","2020","2021","2022"};
         ArrayAdapter<String> intakeTypes = new ArrayAdapter<String>(StudentRegisterActivity.this , android.R.layout.simple_dropdown_item_1line, intakes);
@@ -137,19 +183,27 @@ public class StudentRegisterActivity extends AppCompatActivity {
                 String txt_degree = degree.getText().toString();
                 String txt_r_stud_year = r_stud_year.getText().toString();
                 String txt_intake = intake.getText().toString();
+                String txt_dob = dob.getText().toString();
 
-                if(TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_student_id) || TextUtils.isEmpty(txt_nic) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_phone) || TextUtils.isEmpty(txt_password1) || TextUtils.isEmpty(txt_password2) || TextUtils.isEmpty(txt_center) || TextUtils.isEmpty(txt_degree) || TextUtils.isEmpty(txt_r_stud_year)  || TextUtils.isEmpty(txt_intake) ) {
+                String txt_gender;
+                if (male.isChecked()) {
+                    txt_gender = male.getText().toString();
+                } else {
+                    txt_gender = female.getText().toString();
+                }
+
+                if (TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_student_id) || TextUtils.isEmpty(txt_nic) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_phone) || TextUtils.isEmpty(txt_password1) || TextUtils.isEmpty(txt_password2) || TextUtils.isEmpty(txt_center) || TextUtils.isEmpty(txt_degree) || TextUtils.isEmpty(txt_r_stud_year) || TextUtils.isEmpty(txt_intake) || TextUtils.isEmpty(txt_dob) || TextUtils.isEmpty(txt_gender)) {
                     Toast.makeText(StudentRegisterActivity.this, "All filed are required", Toast.LENGTH_SHORT).show();
-                } else if(!Validation.isValidEmailAddress(txt_email)) {
+                } else if (!Validation.isValidEmailAddress(txt_email)) {
                     Toast.makeText(StudentRegisterActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();
-                } else if(!Validation.isValidMobileNumber(txt_phone)){
+                } else if (!Validation.isValidMobileNumber(txt_phone)) {
                     Toast.makeText(StudentRegisterActivity.this, "Enter valid phone number", Toast.LENGTH_SHORT).show();
-                } else if(!txt_password1.equals(txt_password2)){
+                } else if (!txt_password1.equals(txt_password2)) {
                     Toast.makeText(StudentRegisterActivity.this, "Password not mach", Toast.LENGTH_SHORT).show();
-                } else if (txt_password1.length() < 6){
+                } else if (txt_password1.length() < 6) {
                     Toast.makeText(StudentRegisterActivity.this, "Password must be least 6 characters", Toast.LENGTH_SHORT).show();
-                }else
-                    register(txt_name, txt_student_id, txt_nic, txt_email, txt_phone, txt_password1, txt_center, txt_degree, txt_r_stud_year, txt_intake);
+                }
+                register(txt_name, txt_student_id, txt_nic, txt_email, txt_phone, txt_password1, txt_center, txt_degree, txt_r_stud_year, txt_intake, txt_dob, txt_gender);
 
 
             }
@@ -164,18 +218,19 @@ public class StudentRegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void register(final String name, final String student_id, final String nic, final String email, final String phone, final String password1, final String center, final String degree, final String r_stud_year, final String intake) {
+    private void register(final String name, final String student_id, final String nic, final String email, final String phone, final String password1, final String center, final String degree, final String r_stud_year, final String intake, final String dob,final String gender ) {
         auth.createUserWithEmailAndPassword(email,password1)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+               .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             FirebaseUser firebaseUser=auth.getCurrentUser();
-                            String companyId = firebaseUser.getUid();
+                            String studentId = firebaseUser.getUid();
 
-                            reference = FirebaseDatabase.getInstance().getReference("Student").child(student_id);
+                            reference = FirebaseDatabase.getInstance().getReference("Student").child(studentId);
 
                             HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("id",studentId);
                             hashMap.put("student_id",student_id);
                             hashMap.put("name",name);
                             hashMap.put("nic", nic);
@@ -185,6 +240,8 @@ public class StudentRegisterActivity extends AppCompatActivity {
                             hashMap.put("degree", degree);
                             hashMap.put("r_stud_year", r_stud_year);
                             hashMap.put("intake", intake);
+                            hashMap.put("dob", dob);
+                            hashMap.put("gender", gender);
                             hashMap.put("status", "0");
                             hashMap.put("P_imageURL", "default");
                             hashMap.put("C_imageURL", "default");
