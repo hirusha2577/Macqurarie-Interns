@@ -59,7 +59,12 @@ public class AboutActivity extends AppCompatActivity {
         btn_edit_about = findViewById(R.id.btn_edit_about);
 
         firebaseUser = firebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Company").child(firebaseUser.getUid());
+        if(userType.equals("company")){
+            databaseReference = FirebaseDatabase.getInstance().getReference("Company").child(firebaseUser.getUid());
+        }else{
+            databaseReference = FirebaseDatabase.getInstance().getReference("Student").child(firebaseUser.getUid());
+        }
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -86,7 +91,8 @@ public class AboutActivity extends AppCompatActivity {
                     databaseReference = FirebaseDatabase.getInstance().getReference("Company").child(userId).child("about");
                     databaseReference.setValue(txt_about);
                 }else{
-                    // student about
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Student").child(userId).child("about");
+                    databaseReference.setValue(txt_about);
                 }
 
             }

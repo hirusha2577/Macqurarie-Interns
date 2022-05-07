@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import com.example.macqurarieinterns.AboutActivity;
 import com.example.macqurarieinterns.MainActivity;
 import com.example.macqurarieinterns.Model.Company;
+import com.example.macqurarieinterns.Model.Student;
 import com.example.macqurarieinterns.PostCreateActivity;
 import com.example.macqurarieinterns.R;
 import com.example.macqurarieinterns.StudentEditProfileActivity;
@@ -146,17 +147,17 @@ public class ProfileFragment extends Fragment  {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue() != null){
                     userType = "student";
-                    Company company = dataSnapshot.getValue(Company.class);
-                    name.setText(company.getName());
-                    if (company.getP_imageURL().equals("default")){
+                    Student student = dataSnapshot.getValue(Student.class);
+                    name.setText(student.getName());
+                    if (student.getP_imageURL().equals("default")){
                         profile_image.setImageResource(R.mipmap.ic_launcher);
                     }else {
-                        Picasso.get().load(company.getP_imageURL()).into(profile_image);
+                        Picasso.get().load(student.getP_imageURL()).into(profile_image);
                     }
-                    if(company.getC_imageURL().equals("default")){
+                    if(student.getC_imageURL().equals("default")){
                         cover_image.setImageResource(R.mipmap.ic_launcher);
                     }else {
-                        Picasso.get().load(company.getC_imageURL()).into(cover_image);
+                        Picasso.get().load(student.getC_imageURL()).into(cover_image);
                     }
                 }
             }
@@ -316,7 +317,40 @@ public class ProfileFragment extends Fragment  {
                     }
                 });
             }else{
-                //student p image uploard
+                final StorageReference fileReference = storageReference21.child(System.currentTimeMillis()
+                        + "." + getFilExtension(uri));
+                uploadTask = fileReference.putFile(uri);
+                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+                        return fileReference.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            String mUri = downloadUri.toString();
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Student").child(firebaseUser.getUid());
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("P_imageURL", mUri);
+                            databaseReference.updateChildren(map);
+                            pd.dismiss();
+                        } else {
+                            Toast.makeText(getContext(), "Failed!", Toast.LENGTH_SHORT).show();
+                            pd.dismiss();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
+                    }
+                });
             }
         }else {
             Toast.makeText(getContext(), "No image selected", Toast.LENGTH_SHORT).show();
@@ -368,7 +402,42 @@ public class ProfileFragment extends Fragment  {
                     }
                 });
             }else{
-                // student cover image uploard
+                final StorageReference fileReference = storageReference22.child(System.currentTimeMillis()
+                        + "." + getFilExtension(uri));
+
+                uploadTask = fileReference.putFile(uri);
+                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+                        return fileReference.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            String mUri = downloadUri.toString();
+
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Student").child(firebaseUser.getUid());
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("C_imageURL", mUri);
+                            databaseReference.updateChildren(map);
+                            pd.dismiss();
+                        } else {
+                            Toast.makeText(getContext(), "Failed!", Toast.LENGTH_SHORT).show();
+                            pd.dismiss();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
+                    }
+                });
             }
         }else {
             Toast.makeText(getContext(), "No image selected", Toast.LENGTH_SHORT).show();
