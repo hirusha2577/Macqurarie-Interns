@@ -135,6 +135,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
                             hashMap.put("email", email);
                             hashMap.put("phone", phone);
                             hashMap.put("type", type);
+                            hashMap.put("about", "Enter Company About");
                             hashMap.put("status", "0");
                             hashMap.put("P_imageURL", "default");
                             hashMap.put("C_imageURL", "default");

@@ -12,12 +12,13 @@ public class Company {
     private String phone;
     private String C_imageURL;
     private String status;
+    private String about;
 
     public Company(){
 
     }
 
-    public Company(String id, String name, String register_no, String address, String p_imageURL, String email, String type, String phone, String c_imageURL, String status) {
+    public Company(String id, String name, String register_no, String address, String p_imageURL, String email, String type, String phone, String c_imageURL, String status, String about) {
         this.id = id;
         this.name = name;
         this.register_no = register_no;
@@ -28,6 +29,7 @@ public class Company {
         this.phone = phone;
         C_imageURL = c_imageURL;
         this.status = status;
+        this.about = about;
     }
 
     public String getId() {
@@ -108,5 +110,13 @@ public class Company {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 }
