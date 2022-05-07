@@ -245,6 +245,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
                             hashMap.put("status", "0");
                             hashMap.put("P_imageURL", "default");
                             hashMap.put("C_imageURL", "default");
+                            hashMap.put("about", "Enter Student About");
 
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
