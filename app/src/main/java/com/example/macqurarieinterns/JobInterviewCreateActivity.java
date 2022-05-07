@@ -8,11 +8,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Objects;
 
 public class JobInterviewCreateActivity extends AppCompatActivity {
+
+    private TextView closing_date,closing_time;
+    private EditText Place,dis;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,11 @@ public class JobInterviewCreateActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        closing_date = findViewById(R.id.closing_date);
+        closing_time = findViewById(R.id.closing_time);
+        Place = findViewById(R.id.Place);
+        dis = findViewById(R.id.dis);
     }
 
     @Override
