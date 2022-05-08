@@ -39,6 +39,8 @@ public class AdminJobCategoryActivity extends AppCompatActivity {
                 Intent intent = new Intent(AdminJobCategoryActivity.this, AdminJobCategoryActivity.class);
                 startActivity(intent);
             }
+
         });
+
     }
 }
