@@ -30,8 +30,8 @@ import static com.example.macqurarieinterns.Function.MyIntent.moveActivity;
 
 public class CompanyRegisterActivity extends AppCompatActivity {
 
-    private FirebaseAuth auth;
-    private DatabaseReference reference;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
     private EditText name, register_no, address, phone, email, password1, password2;
     private AutoCompleteTextView type;
@@ -44,7 +44,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_register);
 
-        auth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         name = findViewById(R.id.name);
         register_no = findViewById(R.id.register_no);
@@ -117,15 +117,15 @@ public class CompanyRegisterActivity extends AppCompatActivity {
     }
 
     private void companyRegister(final String name, final String register_no, final String address, final String email, final String phone, final String password1, final String type) {
-        auth.createUserWithEmailAndPassword(email,password1)
+        firebaseAuth.createUserWithEmailAndPassword(email,password1)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            FirebaseUser firebaseUser=auth.getCurrentUser();
+                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                             String companyId = firebaseUser.getUid();
 
-                            reference = FirebaseDatabase.getInstance().getReference("Company").child(companyId);
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Company").child(companyId);
 
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("id", companyId);
@@ -140,7 +140,7 @@ public class CompanyRegisterActivity extends AppCompatActivity {
                             hashMap.put("P_imageURL", "default");
                             hashMap.put("C_imageURL", "default");
 
-                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){

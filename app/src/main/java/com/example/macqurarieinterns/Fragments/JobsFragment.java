@@ -29,6 +29,7 @@ public class JobsFragment extends Fragment {
     private ImageButton more_btn;
     private FloatingActionButton create_job_btn;
     private CardView job_card;
+    private String userType;
 
 
     public JobsFragment() {
@@ -42,69 +43,71 @@ public class JobsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_jobs, container, false);
 
+        MainActivity activity = (MainActivity) getActivity();
+        userType = activity.getUserType();
+
         more_btn = view.findViewById(R.id.more_btn);
         create_job_btn = view.findViewById(R.id.create_job_btn);
         job_card = view.findViewById(R.id.job_card);
+
+        if(userType.equals("company")){
+            create_job_btn.setVisibility(View.VISIBLE);
+        }else{
+            create_job_btn.setVisibility(View.GONE);
+        }
 
 
         create_job_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), JobCreateActivity.class);
-//                intent.putExtra("company_id", u_id);
                 startActivity(intent);
             }
         });
 
-        job_card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), JobMoreDetailsActivity.class);
-//                intent.putExtra("company_id", u_id);
-                startActivity(intent);
-            }
-        });
+//        job_card.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), JobMoreDetailsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
-        more_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(getContext(),view);
-                popupMenu.inflate(R.menu.job_popup);
-                popupMenu.show();
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.appliers_job:
-                                Intent intent = new Intent(getContext(), JobAppliersActivity.class);
-//                intent.putExtra("company_id", u_id);
-                                startActivity(intent);
-                                return true;
-
-                            case R.id.interview_job:
-                                Intent intent1 = new Intent(getContext(), JobInterviewActivity.class);
-//                intent.putExtra("company_id", u_id);
-                                startActivity(intent1);
-                                return true;
-
-                            case R.id.edit_job:
-                                Intent intent2 = new Intent(getContext(), JobCreateActivity.class);
-//                intent.putExtra("company_id", u_id);
-                                startActivity(intent2);
-                                return true;
-
-                            case R.id.delete_job:
-                                Toast.makeText(getContext(),"deleted",Toast.LENGTH_LONG).show();
-                                return true;
-
-
-                        }
-                        return false;
-                    }
-                });
-            }
-        });
+//        more_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                PopupMenu popupMenu = new PopupMenu(getContext(),view);
+//                popupMenu.inflate(R.menu.job_popup);
+//                popupMenu.show();
+//                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem menuItem) {
+//                        switch (menuItem.getItemId()) {
+//                            case R.id.appliers_job:
+//                                Intent intent = new Intent(getContext(), JobAppliersActivity.class);
+//                                startActivity(intent);
+//                                return true;
+//
+//                            case R.id.interview_job:
+//                                Intent intent1 = new Intent(getContext(), JobInterviewActivity.class);
+//                                startActivity(intent1);
+//                                return true;
+//
+//                            case R.id.edit_job:
+//                                Intent intent2 = new Intent(getContext(), JobCreateActivity.class);
+//                                startActivity(intent2);
+//                                return true;
+//
+//                            case R.id.delete_job:
+//                                Toast.makeText(getContext(),"deleted",Toast.LENGTH_LONG).show();
+//                                return true;
+//                        }
+//                        return false;
+//                    }
+//                });
+//            }
+//        });
 
 
 
