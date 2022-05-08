@@ -36,7 +36,7 @@ public class AdminJobCategoryActivity extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AdminJobCategoryActivity.this, JobInterviewCreateActivity.class);
+                Intent intent = new Intent(AdminJobCategoryActivity.this, AdminJobCategoryActivity.class);
                 startActivity(intent);
             }
         });
