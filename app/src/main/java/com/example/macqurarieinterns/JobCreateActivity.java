@@ -46,7 +46,7 @@ public class JobCreateActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference, databaseReference1;
-    private String companyName, companyId;
+    private String companyName, companyId, companyAddress, companyImage;
     ProgressDialog pd;
 
     @Override
@@ -76,16 +76,18 @@ public class JobCreateActivity extends AppCompatActivity {
         FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
         companyId = firebaseUser.getUid();
 
-        databaseReference1 = FirebaseDatabase.getInstance().getReference("Company").child(companyId).child("name");
-        databaseReference1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                companyName = (String) dataSnapshot.getValue();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+//        databaseReference1 = FirebaseDatabase.getInstance().getReference("Company").child(companyId);
+//        databaseReference1.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                companyName = (String)dataSnapshot.child("name").getValue();
+//                companyAddress = (String)dataSnapshot.child("address").getValue();
+//                companyImage = (String)dataSnapshot.child("P_imageURL").getValue();
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        });
 
         String[] types ={"C","C++","Java",".NET","iPhone","Android","ASP.NET","PHP"};
         ArrayAdapter<String> companyTypes = new ArrayAdapter<String>(JobCreateActivity.this , android.R.layout.simple_dropdown_item_1line, types);
@@ -133,7 +135,9 @@ public class JobCreateActivity extends AppCompatActivity {
 
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("id", companyId);
-        hashMap.put("company_name", companyName);
+//        hashMap.put("company_name", companyName);
+//        hashMap.put("company_address", companyAddress);
+//        hashMap.put("company_image", companyImage);
         hashMap.put("title",title);
         hashMap.put("field",field);
         hashMap.put("description", description);

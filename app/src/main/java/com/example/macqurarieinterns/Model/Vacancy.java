@@ -9,8 +9,14 @@ public class Vacancy {
     private String description;
     private String appliers_count;
     private String pTime;
+    private String company_address;
+    private String company_image;
 
-    public Vacancy(String id, String company_name, String title, String field, String description, String appliers_count, String pTime) {
+    public Vacancy(){
+
+    }
+
+    public Vacancy(String id, String company_name, String title, String field, String description, String appliers_count, String pTime, String company_address, String company_image) {
         this.id = id;
         this.company_name = company_name;
         this.title = title;
@@ -18,6 +24,8 @@ public class Vacancy {
         this.description = description;
         this.appliers_count = appliers_count;
         this.pTime = pTime;
+        this.company_address = company_address;
+        this.company_image = company_image;
     }
 
     public String getId() {
@@ -74,5 +82,21 @@ public class Vacancy {
 
     public void setpTime(String pTime) {
         this.pTime = pTime;
+    }
+
+    public String getCompany_address() {
+        return company_address;
+    }
+
+    public void setCompany_address(String company_address) {
+        this.company_address = company_address;
+    }
+
+    public String getCompany_image() {
+        return company_image;
+    }
+
+    public void setCompany_image(String company_image) {
+        this.company_image = company_image;
     }
 }
