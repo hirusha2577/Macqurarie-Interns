@@ -83,12 +83,14 @@ public class ProfileFragment extends Fragment  {
 
     private static String userType;
 
-    private DatabaseReference databaseReference, databaseReference2;
+    private DatabaseReference databaseReference, databaseReference2, databaseReference3;
 
     List<Post> postList;
     RecyclerView recyclerview_posts;
     PostAdapter postAdapter;
     String uid;
+
+    private String companyName, userId, companyImage;
 
 
     public ProfileFragment() {
@@ -101,6 +103,8 @@ public class ProfileFragment extends Fragment  {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        checkUserStatus();
 
         tab_post = view.findViewById(R.id.tab_about);
         tab_about = view.findViewById(R.id.tab_about);
@@ -178,6 +182,24 @@ public class ProfileFragment extends Fragment  {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
+        /////////////////////////////////////////
+        databaseReference3 = FirebaseDatabase.getInstance().getReference("Company").child(uid);
+        databaseReference3.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                companyName = (String)dataSnapshot.child("name").getValue();
+                companyImage = (String)dataSnapshot.child("P_imageURL").getValue();
+                System.out.println("//////////////////////////////////////////////");
+                System.out.println(companyName);
+                System.out.println(companyImage);
+                System.out.println("//////////////////////////////////////////////");
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        /////////////////////////////////////////
 
 
 
@@ -258,7 +280,9 @@ public class ProfileFragment extends Fragment  {
             }
         });
 
-        firebaseAuth = FirebaseAuth.getInstance();
+
+
+
         recyclerview_posts = view.findViewById(R.id.recyclerview_posts);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setStackFromEnd(true);
@@ -267,7 +291,7 @@ public class ProfileFragment extends Fragment  {
 
         postList = new ArrayList<>();
 
-        checkUserStatus();
+
         loadMyPosts();
 
         return view;
@@ -326,6 +350,7 @@ public class ProfileFragment extends Fragment  {
                             HashMap<String, Object> map = new HashMap<>();
                             map.put("P_imageURL", mUri);
                             databaseReference.updateChildren(map);
+
                             pd.dismiss();
                         } else {
                             Toast.makeText(getContext(), "Failed!", Toast.LENGTH_SHORT).show();
@@ -531,7 +556,6 @@ public class ProfileFragment extends Fragment  {
             startActivity(new Intent(getActivity(), MainActivity.class));
             getActivity().finish();
         }
-
     }
 
 

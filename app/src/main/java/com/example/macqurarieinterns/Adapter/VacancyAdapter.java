@@ -29,19 +29,23 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.MyHolder
 
     Context context;
     List<Vacancy> vacancyList;
-    List<Company> companyList;
+    String companyName;
+    String companyAddress;
+    String companyImage;
 
-    public VacancyAdapter(Context context, List<Vacancy> vacancyList, List<Company> companyList) {
+    public VacancyAdapter(Context context, List<Vacancy> vacancyList, String companyName, String companyAddress, String companyImage) {
         this.context = context;
         this.vacancyList = vacancyList;
-        this.companyList = companyList;
+        this.companyName = companyName;
+        this.companyAddress = companyAddress;
+        this.companyImage = companyImage;
     }
 
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_job, parent, false);
         return new MyHolder(view);
     }
 
@@ -53,30 +57,30 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.MyHolder
         String txt_description = vacancyList.get(position).getDescription();
         String txt_time = vacancyList.get(position).getpTime();
 
-        String txt_name = companyList.get(position).getName();
-        String txt_image = companyList.get(position).getP_imageURL();
-        String txt_address = companyList.get(position).getAddress();
+//        String txt_name = vacancyList.get(position).getCompany_name();
+//        String txt_image = vacancyList.get(position).getCompany_image();
+//        String txt_address = vacancyList.get(position).getCompany_address();
 
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTimeInMillis(Long.parseLong(txt_time));
         String pTime = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 
         holder.title.setText(txt_title);
-        holder.name.setText(txt_name);
-        holder.address.setText(txt_address);
+        holder.name.setText(companyName);
+        holder.address.setText(companyAddress);
         holder.date.setText(pTime);
 
-        if (txt_image.equals("default")){
+        if (companyImage.equals("default")){
             holder.image.setImageResource(R.mipmap.ic_launcher);
         }else {
             try {
-                Picasso.get().load(txt_image).into(holder.image);
+                Picasso.get().load(companyImage).into(holder.image);
             } catch (Exception e) {
 
             }
         }
         try {
-            Picasso.get().load(txt_image).placeholder(R.mipmap.ic_launcher).into(holder.image);
+            Picasso.get().load(companyImage).placeholder(R.mipmap.ic_launcher).into(holder.image);
         } catch (Exception e) {
 
         }
