@@ -3,6 +3,7 @@ package com.example.macqurarieinterns;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.macqurarieinterns.Fragments.JobsFragment;
 import com.example.macqurarieinterns.Model.Company;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -145,7 +147,7 @@ public class JobCreateActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         pd.dismiss();
                         Toast.makeText(JobCreateActivity.this, "Vacancy published", Toast.LENGTH_SHORT).show();
-                        moveActivity(JobCreateActivity.this,MainActivity.class);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
