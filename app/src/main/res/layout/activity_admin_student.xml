@@ -85,12 +85,14 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
+
                         <TextView
+                            android:id="@+id/deactivateBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Deactivate"
                             android:padding="10dp"
-                            android:textColor="@color/colorPrimaryDark"/>
+                            android:text="Deactivate"
+                            android:textColor="@color/colorPrimaryDark" />
                     </LinearLayout>
 
 
