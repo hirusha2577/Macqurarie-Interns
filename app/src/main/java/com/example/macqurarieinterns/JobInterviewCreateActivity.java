@@ -12,6 +12,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.Objects;
 
 public class JobInterviewCreateActivity extends AppCompatActivity {
@@ -19,6 +27,9 @@ public class JobInterviewCreateActivity extends AppCompatActivity {
     private TextView closing_date,closing_time;
     private EditText Place,dis;
 
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference, databaseReference1;
+    private String companyName, companyId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +52,22 @@ public class JobInterviewCreateActivity extends AppCompatActivity {
         closing_time = findViewById(R.id.closing_time);
         Place = findViewById(R.id.Place);
         dis = findViewById(R.id.dis);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+        companyId = firebaseUser.getUid();
+
+        databaseReference1 = FirebaseDatabase.getInstance().getReference("Company").child(companyId).child("name");
+        databaseReference1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                companyName = (String) dataSnapshot.getValue();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
     }
 
     @Override
