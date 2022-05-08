@@ -56,6 +56,8 @@ public class JobInterviewCreateActivity extends AppCompatActivity {
 
         pd = new ProgressDialog(this);
 
+
+
         firebaseUser = firebaseAuth.getInstance().getCurrentUser();
         companyID = firebaseUser.getUid();
 
@@ -143,6 +145,8 @@ public class JobInterviewCreateActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(txt_closing_date) || TextUtils.isEmpty(txt_closing_time) || TextUtils.isEmpty(txt_Place) || TextUtils.isEmpty(txt_dis)){
                     Toast.makeText(JobInterviewCreateActivity.this, "All filed are required", Toast.LENGTH_SHORT).show();
                 }else{
+
+
                     createInterview(txt_closing_date, txt_closing_time, txt_Place, txt_dis);
                 }
 
