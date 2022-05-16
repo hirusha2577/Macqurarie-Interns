@@ -32,9 +32,8 @@
                     android:id="@+id/cover_image"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@color/colorPrimaryDark"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/cover" />
+                    android:background="@color/silver_light"
+                    android:scaleType="fitXY" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/c_image_change"
@@ -80,7 +79,6 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="40dp"
                         android:padding="1dp"
-                        android:src="@mipmap/profile_b_3"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="4dp" />
 
@@ -123,7 +121,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="Hirusha Ravishan"
                     android:textColor="@color/black"
                     android:textSize="23sp"
                     android:textStyle="bold" />

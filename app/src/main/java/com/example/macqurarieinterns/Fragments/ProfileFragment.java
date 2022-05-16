@@ -172,7 +172,7 @@ public class ProfileFragment extends Fragment  {
                         Picasso.get().load(student.getP_imageURL()).into(profile_image);
                     }
                     if(student.getC_imageURL().equals("default")){
-                        cover_image.setImageResource(R.mipmap.ic_launcher);
+//                        cover_image.setImageResource(R.mipmap.ic_launcher);
                     }else {
                         Picasso.get().load(student.getC_imageURL()).into(cover_image);
                     }

@@ -50,7 +50,6 @@ public class JobMoreDetailsActivity extends AppCompatActivity {
     private TextView title, date, description;
     private RelativeLayout apply_card;
 
-    private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private StorageReference storageReference;
     private String student_id;
