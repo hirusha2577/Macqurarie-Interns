@@ -190,10 +190,10 @@ public class ProfileFragment extends Fragment  {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 companyName = (String)dataSnapshot.child("name").getValue();
                 companyImage = (String)dataSnapshot.child("P_imageURL").getValue();
-                System.out.println("//////////////////////////////////////////////");
-                System.out.println(companyName);
-                System.out.println(companyImage);
-                System.out.println("//////////////////////////////////////////////");
+//                System.out.println("//////////////////////////////////////////////");
+//                System.out.println(companyName);
+//                System.out.println(companyImage);
+//                System.out.println("//////////////////////////////////////////////");
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

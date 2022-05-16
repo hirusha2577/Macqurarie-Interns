@@ -49,7 +49,7 @@ public class JobsFragment extends Fragment {
 
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference,databaseReference1;
+    private DatabaseReference databaseReference, databaseReference1;
 
 
     private FloatingActionButton create_job_btn;
@@ -57,7 +57,6 @@ public class JobsFragment extends Fragment {
     String uid;
 
     List<Vacancy> vacancyList;
-    List<Company> companyList;
     RecyclerView recyclerview_vacancy;
     VacancyAdapter vacancyAdapter;
 
@@ -80,9 +79,9 @@ public class JobsFragment extends Fragment {
 
         create_job_btn = view.findViewById(R.id.create_job_btn);
 
-        if(userType.equals("company")){
+        if (userType.equals("company")) {
             create_job_btn.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             create_job_btn.setVisibility(View.GONE);
         }
 
@@ -97,17 +96,18 @@ public class JobsFragment extends Fragment {
 
 
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         companyId = firebaseUser.getUid();
 
         databaseReference1 = FirebaseDatabase.getInstance().getReference("Company").child(companyId);
         databaseReference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                companyName = (String)dataSnapshot.child("name").getValue();
-                companyAddress = (String)dataSnapshot.child("address").getValue();
-                companyImage = (String)dataSnapshot.child("P_imageURL").getValue();
+                companyName = (String) dataSnapshot.child("name").getValue();
+                companyAddress = (String) dataSnapshot.child("address").getValue();
+                companyImage = (String) dataSnapshot.child("P_imageURL").getValue();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -121,26 +121,62 @@ public class JobsFragment extends Fragment {
         recyclerview_vacancy.setLayoutManager(layoutManager);
 
         vacancyList = new ArrayList<>();
-        companyList = new ArrayList<>();
-
 
         checkUserStatus();
-        loadCompanyVacancy();
-
+        if (userType.equals("company")) {
+            loadCompanyVacancy();
+        } else {
+            loadAllVacancy();
+        }
 
         return view;
+    }
+
+    private void loadAllVacancy() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Vacancy");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                vacancyList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Vacancy vacancy = snapshot.getValue(Vacancy.class);
+                    String id = (String) snapshot.child("company_id").getValue();
+                    databaseReference1 = FirebaseDatabase.getInstance().getReference("Company").child(id);
+                    databaseReference1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                companyName = (String) dataSnapshot.child("name").getValue();
+                                companyAddress = (String) dataSnapshot.child("address").getValue();
+                                companyImage = (String) dataSnapshot.child("P_imageURL").getValue();
+
+                                vacancyList.add(vacancy);
+                                vacancyAdapter = new VacancyAdapter(getActivity(), vacancyList, companyName, companyAddress, companyImage);
+                                recyclerview_vacancy.setAdapter(vacancyAdapter);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getActivity(), "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
     private void loadCompanyVacancy() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Vacancy");
-        Query query = databaseReference.orderByChild("id").equalTo(uid);
+        Query query = databaseReference.orderByChild("company_id").equalTo(uid);
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 vacancyList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Vacancy vacancy = snapshot.getValue(Vacancy.class);
                     vacancyList.add(vacancy);
                     vacancyAdapter = new VacancyAdapter(getActivity(), vacancyList, companyName, companyAddress, companyImage);
@@ -150,12 +186,12 @@ public class JobsFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private  void checkUserStatus(){
+    private void checkUserStatus() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
             uid = user.getUid();
