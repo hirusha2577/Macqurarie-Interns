@@ -147,7 +147,7 @@ public class ProfileFragment extends Fragment  {
                         Picasso.get().load(company.getP_imageURL()).into(profile_image);
                     }
                     if(company.getC_imageURL().equals("default")){
-                        cover_image.setImageResource(R.mipmap.ic_launcher);
+//                        cover_image.setImageResource(R.mipmap.ic_launcher);
                     }else {
                         Picasso.get().load(company.getC_imageURL()).into(cover_image);
                     }
@@ -234,36 +234,6 @@ public class ProfileFragment extends Fragment  {
                 startActivity(intent);
             }
         });
-
-
-//        moreBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                PopupMenu popupMenu = new PopupMenu(getContext(),view);
-//                popupMenu.inflate(R.menu.post_popup);
-//                popupMenu.show();
-//                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem menuItem) {
-//                        switch (menuItem.getItemId()) {
-//                            case R.id.edit_post:
-//                                Intent intent = new Intent(getContext(), PostCreateActivity.class);
-////                intent.putExtra("company_id", u_id);
-//                                startActivity(intent);
-//                                return true;
-//
-//                            case R.id.delete_post:
-//                                Intent intent1 = new Intent(getContext(), MainActivity.class);
-////                intent.putExtra("company_id", u_id);
-//                                startActivity(intent1);
-//                                return true;
-//
-//                        }
-//                        return false;
-//                    }
-//                });
-//            }
-//        });
 
 
         p_image_change.setOnClickListener(new View.OnClickListener() {

@@ -40,6 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -64,7 +65,7 @@ public class PostCreateActivity extends AppCompatActivity {
     private LinearLayout image_choose;
     private ImageView postImage;
 
-    String name, email, uid, udp;
+    String name, email, uid, udp, post_id, post_description, post_image, post_edit ;
 
     Uri image_rui = null;
     private static String userType;
@@ -76,7 +77,7 @@ public class PostCreateActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Create Post");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Post");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,8 +86,13 @@ public class PostCreateActivity extends AppCompatActivity {
             }
         });
 
-        userType = MainActivity.getUserType();
+        Intent intent = getIntent();
+        post_id = intent.getStringExtra("post_id");
+        post_description = intent.getStringExtra("post_description");
+        post_image = intent.getStringExtra("post_image");
+        post_edit = intent.getStringExtra("post_edit");
 
+        userType = MainActivity.getUserType();
 
         //init permissions arrays
         cameraPermissions = new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -117,7 +123,6 @@ public class PostCreateActivity extends AppCompatActivity {
             }
         });
 
-
         postDis = findViewById(R.id.postDis);
         image_choose = findViewById(R.id.image_choose);
         postImage = findViewById(R.id.postImage);
@@ -128,11 +133,26 @@ public class PostCreateActivity extends AppCompatActivity {
                 showImagePicDilog();
             }
         });
+
+        if(post_edit!=null){
+            if(post_image.equals("noImage")){
+                postDis.setText(post_description);
+                postImage.setVisibility(View.GONE);
+            }else{
+                postDis.setText(post_description);
+                postImage.setVisibility(View.VISIBLE);
+                Picasso.get().load(post_image).into(postImage);
+            }
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.post_btn, menu);
+        if(post_edit==null){
+            getMenuInflater().inflate(R.menu.post_btn, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.post_edit_btn, menu);
+        }
         return true;
     }
 
@@ -152,8 +172,94 @@ public class PostCreateActivity extends AppCompatActivity {
                 }
                 Toast.makeText(PostCreateActivity.this,"Post Uploaded",Toast.LENGTH_LONG).show();
                 return true;
+            case R.id.edit_post:
+                String text_description = postDis.getText().toString();
+
+                if(TextUtils.isEmpty(text_description) ){
+                    Toast.makeText(PostCreateActivity.this, "All filed are required", Toast.LENGTH_SHORT).show();
+                }else{
+                    if(image_rui == null){
+                        editVacancy(text_description, "noImage");
+                    }else {
+                        editVacancy(text_description, String.valueOf(image_rui));
+                    }
+                }
+                return true;
         }
         return false;
+    }
+
+    private void editVacancy(String text_description, String uri) {
+        pd.setMessage("Updating  post....");
+        pd.show();
+
+        final String timestamp = String.valueOf(System.currentTimeMillis());
+        String filPathAndName = "Posts/" + "post_" + timestamp;
+        if (!uri.equals("noImage")){
+            StorageReference ref = FirebaseStorage.getInstance().getReference().child(filPathAndName);
+            ref.putFile(Uri.parse(uri))
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                            while (!uriTask.isSuccessful());
+
+                            String downloadUri = uriTask.getResult().toString();
+
+                            if (uriTask.isSuccessful()){
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts").child(post_id);
+                                HashMap<String,Object> hashMap = new HashMap<>();
+                                hashMap.put("pDescr", text_description);
+                                hashMap.put("pImage", downloadUri);
+
+                                databaseReference.updateChildren(hashMap)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                pd.dismiss();
+                                                Toast.makeText(PostCreateActivity.this, "Post Updating..", Toast.LENGTH_SHORT).show();
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                pd.dismiss();
+                                                Toast.makeText(PostCreateActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    pd.dismiss();
+                    Toast.makeText(PostCreateActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts").child(post_id);
+            HashMap<String,Object> hashMap = new HashMap<>();
+            hashMap.put("pDescr", text_description);
+            databaseReference.updateChildren(hashMap)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            pd.dismiss();
+                            Toast.makeText(PostCreateActivity.this, "Post Updating..", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            pd.dismiss();
+                            Toast.makeText(PostCreateActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
     }
 
     ////////////////////////////////////////////
