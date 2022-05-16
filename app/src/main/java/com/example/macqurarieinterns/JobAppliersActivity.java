@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -15,12 +16,12 @@ import static com.example.macqurarieinterns.Function.MyIntent.moveActivity;
 public class JobAppliersActivity extends AppCompatActivity {
 
     private ImageButton confirm;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_appliers);
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -32,6 +33,11 @@ public class JobAppliersActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Intent intent = getIntent();
+        id = intent.getStringExtra("vacancy_id");
+
+      System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++"+id);
 
         confirm = findViewById(R.id.confirm);
 

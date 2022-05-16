@@ -3,6 +3,7 @@ package com.example.macqurarieinterns.Model;
 public class Vacancy {
 
     private String id;
+    private String company_id;
     private String company_name;
     private String title;
     private String field;
@@ -16,8 +17,9 @@ public class Vacancy {
 
     }
 
-    public Vacancy(String id, String company_name, String title, String field, String description, String appliers_count, String pTime, String company_address, String company_image) {
+    public Vacancy(String id,String company_id, String company_name, String title, String field, String description, String appliers_count, String pTime, String company_address, String company_image) {
         this.id = id;
+        this.company_id = company_id;
         this.company_name = company_name;
         this.title = title;
         this.field = field;
@@ -26,6 +28,14 @@ public class Vacancy {
         this.pTime = pTime;
         this.company_address = company_address;
         this.company_image = company_image;
+    }
+
+    public String getCompany_id() {
+        return company_id;
+    }
+
+    public void setCompany_id(String company_id) {
+        this.company_id = company_id;
     }
 
     public String getId() {

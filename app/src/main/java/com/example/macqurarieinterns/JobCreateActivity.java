@@ -134,7 +134,8 @@ public class JobCreateActivity extends AppCompatActivity {
         final String timestamp = String.valueOf(System.currentTimeMillis());
 
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("id", companyId);
+        hashMap.put("id", timestamp);
+        hashMap.put("company_id", companyId);
 //        hashMap.put("company_name", companyName);
 //        hashMap.put("company_address", companyAddress);
 //        hashMap.put("company_image", companyImage);
