@@ -71,6 +71,7 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.MyHolder
         String txt_title = vacancyList.get(position).getTitle();
         String txt_description = vacancyList.get(position).getDescription();
         String txt_time = vacancyList.get(position).getpTime();
+        String txt_field = vacancyList.get(position).getField();
 
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTimeInMillis(Long.parseLong(txt_time));
@@ -120,9 +121,14 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.MyHolder
                                 context.startActivity(intent1);
                                 return true;
                             case R.id.edit_job:
-//                                Intent intent2 = new Intent(context, JobCreateActivity.class);
-//                intent.putExtra("company_id", u_id);
-//                                startActivity(intent2);
+                                Intent intent2 = new Intent(context, JobCreateActivity.class);
+                                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent2.putExtra("vacancy_id", vacancy_id);
+                                intent2.putExtra("vacancy_edit", "true");
+                                intent2.putExtra("vacancy_title", txt_title);
+                                intent2.putExtra("vacancy_field", txt_field);
+                                intent2.putExtra("vacancy_description", txt_description);
+                                context.startActivity(intent2);
                                 return true;
 
                             case R.id.delete_job:

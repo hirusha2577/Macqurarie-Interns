@@ -45,8 +45,9 @@ public class JobCreateActivity extends AppCompatActivity {
     private AutoCompleteTextView field;
 
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference, databaseReference1;
-    private String companyName, companyId, companyAddress, companyImage;
+    private DatabaseReference databaseReference;
+    FirebaseUser firebaseUser;
+    private String  companyId, vacancy_id, vacancy_edit , vacancy_title, vacancy_field, vacancy_description;
     ProgressDialog pd;
 
     @Override
@@ -54,9 +55,10 @@ public class JobCreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_create);
 
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Create Job");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Vacancy");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +66,14 @@ public class JobCreateActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Intent intent = getIntent();
+        vacancy_id = intent.getStringExtra("vacancy_id");
+        vacancy_edit = intent.getStringExtra("vacancy_edit");
+
+        vacancy_title = intent.getStringExtra("vacancy_title");
+        vacancy_field = intent.getStringExtra("vacancy_field");
+        vacancy_description = intent.getStringExtra("vacancy_description");
 
         pd = new ProgressDialog(this);
 
@@ -76,19 +86,6 @@ public class JobCreateActivity extends AppCompatActivity {
         FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
         companyId = firebaseUser.getUid();
 
-//        databaseReference1 = FirebaseDatabase.getInstance().getReference("Company").child(companyId);
-//        databaseReference1.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                companyName = (String)dataSnapshot.child("name").getValue();
-//                companyAddress = (String)dataSnapshot.child("address").getValue();
-//                companyImage = (String)dataSnapshot.child("P_imageURL").getValue();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//            }
-//        });
-
         String[] types ={"C","C++","Java",".NET","iPhone","Android","ASP.NET","PHP"};
         ArrayAdapter<String> companyTypes = new ArrayAdapter<String>(JobCreateActivity.this , android.R.layout.simple_dropdown_item_1line, types);
         field.setAdapter(companyTypes);
@@ -100,11 +97,21 @@ public class JobCreateActivity extends AppCompatActivity {
             }
         });
 
+        if(vacancy_edit!=null){
+            title.setText(vacancy_title);
+            field.setText(vacancy_field);
+            description.setText(vacancy_description);
+        }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.post_btn, menu);
+        if(vacancy_edit==null){
+            getMenuInflater().inflate(R.menu.post_btn, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.post_edit_btn, menu);
+        }
         return true;
     }
 
@@ -122,8 +129,46 @@ public class JobCreateActivity extends AppCompatActivity {
                     createVacancy(txt_title, txt_field, txt_description);
                 }
                 return true;
+            case R.id.edit_post:
+                String text_title = title.getText().toString();
+                String text_field = field.getText().toString();
+                String text_description = description.getText().toString();
+                if(TextUtils.isEmpty(text_title) || TextUtils.isEmpty(text_field) || TextUtils.isEmpty(text_description)){
+                    Toast.makeText(JobCreateActivity.this, "All filed are required", Toast.LENGTH_SHORT).show();
+                }else{
+                    editVacancy(text_title, text_field, text_description);
+                }
+                return true;
         }
         return false;
+    }
+
+    private void editVacancy(String title, String field, String description) {
+        pd.setMessage("Updating Vacancy....");
+        pd.show();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Vacancy").child(vacancy_id);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("title",title);
+        hashMap.put("field",field);
+        hashMap.put("description", description);
+        databaseReference.updateChildren(hashMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        pd.dismiss();
+                        Toast.makeText(JobCreateActivity.this, "Vacancy Updating..", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        pd.dismiss();
+                        Toast.makeText(JobCreateActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
     }
 
     private void createVacancy(final String title, final String field, final String description){
@@ -136,14 +181,10 @@ public class JobCreateActivity extends AppCompatActivity {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("id", timestamp);
         hashMap.put("company_id", companyId);
-//        hashMap.put("company_name", companyName);
-//        hashMap.put("company_address", companyAddress);
-//        hashMap.put("company_image", companyImage);
         hashMap.put("title",title);
         hashMap.put("field",field);
         hashMap.put("description", description);
         hashMap.put("pTime", timestamp);
-        hashMap.put("appliers_count", "0");
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Vacancy");
         databaseReference.child(timestamp).setValue(hashMap)
