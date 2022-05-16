@@ -1,6 +1,7 @@
 package com.example.macqurarieinterns.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -16,15 +17,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.macqurarieinterns.JobAppliersActivity;
 import com.example.macqurarieinterns.JobCreateActivity;
 import com.example.macqurarieinterns.JobInterviewActivity;
 import com.example.macqurarieinterns.JobMoreDetailsActivity;
+import com.example.macqurarieinterns.MainActivity;
 import com.example.macqurarieinterns.Model.Company;
 import com.example.macqurarieinterns.Model.Vacancy;
 import com.example.macqurarieinterns.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -33,6 +41,8 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.MyHolder> {
 
     Context context;
@@ -40,6 +50,8 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.MyHolder
     String companyName;
     String companyAddress;
     String companyImage;
+
+    private DatabaseReference databaseReference;
 
     public VacancyAdapter(Context context, List<Vacancy> vacancyList, String companyName, String companyAddress, String companyImage) {
         this.context = context;
@@ -110,19 +122,19 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.MyHolder
                         switch (menuItem.getItemId()) {
                             case R.id.appliers_job:
                                 Intent intent = new Intent(context, JobAppliersActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                                 intent.putExtra("vacancy_id", vacancy_id);
                                 context.startActivity(intent);
                                 return true;
                             case R.id.interview_job:
                                 Intent intent1 = new Intent(context, JobInterviewActivity.class);
-                                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent1.setFlags(FLAG_ACTIVITY_NEW_TASK);
                                 intent1.putExtra("vacancy_id", vacancy_id);
                                 context.startActivity(intent1);
                                 return true;
                             case R.id.edit_job:
                                 Intent intent2 = new Intent(context, JobCreateActivity.class);
-                                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent2.setFlags(FLAG_ACTIVITY_NEW_TASK);
                                 intent2.putExtra("vacancy_id", vacancy_id);
                                 intent2.putExtra("vacancy_edit", "true");
                                 intent2.putExtra("vacancy_title", txt_title);
@@ -132,7 +144,7 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.MyHolder
                                 return true;
 
                             case R.id.delete_job:
-//                                Toast.makeText(getContext(),"deleted",Toast.LENGTH_LONG).show();
+                                ShowDialogBox(vacancy_id);
                                 return true;
                         }
                         return false;
@@ -145,7 +157,7 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.MyHolder
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(context, JobMoreDetailsActivity.class);
-                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent1.setFlags(FLAG_ACTIVITY_NEW_TASK);
                 intent1.putExtra("vacancy_id", vacancy_id);
                 intent1.putExtra("company_id", company_id);
                 intent1.putExtra("vacancy_title", txt_title);
@@ -178,5 +190,46 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.MyHolder
             moreBtn = itemView.findViewById(R.id.moreBtn);
             item = itemView.findViewById(R.id.item);
         }
+    }
+
+    private void ShowDialogBox(final String id) {
+        String[] options = {"Yes", "No"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Are you sure to delete");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) {
+                   deleteVacancy(id);
+                    Toast.makeText(context, "deleted", Toast.LENGTH_LONG).show();
+                }
+                if (which == 1) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.create().show();
+    }
+
+    private void deleteVacancy(final String vacancy_id) {
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Vacancy").child(vacancy_id);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot ds : dataSnapshot.getChildren())
+                {
+                    ds.getRef().removeValue();
+                    Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+                Toast.makeText(context, "Failed to delete", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

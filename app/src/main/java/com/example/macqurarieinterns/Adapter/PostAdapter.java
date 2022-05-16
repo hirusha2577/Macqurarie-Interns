@@ -1,21 +1,26 @@
 package com.example.macqurarieinterns.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.macqurarieinterns.MainActivity;
 import com.example.macqurarieinterns.Model.Post;
+import com.example.macqurarieinterns.PostCreateActivity;
 import com.example.macqurarieinterns.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,6 +36,8 @@ import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyHolder> {
 
@@ -75,9 +82,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyHolder> {
 
         //if post image eka nathnam eka hangana
         if (pImage.equals("noImage")){
-            //hide image
             holder.postImage.setVisibility(View.GONE);
-
         }else {
             try{
                 Picasso.get().load(pImage).into(holder.postImage);
@@ -85,7 +90,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyHolder> {
 
             }
         }
-
         try{
             Picasso.get().load(udp).placeholder(R.mipmap.ic_launcher).into(holder.profile_image);
         }catch (Exception e){
@@ -96,10 +100,36 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyHolder> {
 
         holder.moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "More", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(context,view);
+                popupMenu.inflate(R.menu.post_popup);
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.edit_post:
+                                Intent intent = new Intent(context, PostCreateActivity.class);
+                                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                                intent.putExtra("post_id", pId);
+                                intent.putExtra("post_description", pDescr);
+                                intent.putExtra("post_image", pImage);
+                                intent.putExtra("post_edit", "true");
+                                context.startActivity(intent);
+                                return true;
+
+                            case R.id.delete_post:
+//                                Intent intent1 = new Intent(context, MainActivity.class);
+                                Toast.makeText(context, "delete post", Toast.LENGTH_LONG).show();
+                                return true;
+
+                        }
+                        return false;
+                    }
+                });
             }
         });
+
         holder.likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
