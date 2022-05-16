@@ -1,6 +1,7 @@
 package com.example.macqurarieinterns.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.macqurarieinterns.MainActivity;
@@ -43,6 +45,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyHolder> {
 
     Context context;
     List<Post> postList;
+    private DatabaseReference databaseReference;
 
     public PostAdapter(Context context, List<Post> postList) {
         this.context = context;
@@ -119,8 +122,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyHolder> {
                                 return true;
 
                             case R.id.delete_post:
-//                                Intent intent1 = new Intent(context, MainActivity.class);
-                                Toast.makeText(context, "delete post", Toast.LENGTH_LONG).show();
+                                ShowDialogBox(pId);
                                 return true;
 
                         }
@@ -191,6 +193,47 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyHolder> {
             shareBtn = itemView.findViewById(R.id.shareBtn);
             postLinearLayout = itemView.findViewById(R.id.postLinearLayout);
         }
+    }
+
+    private void ShowDialogBox(final String id) {
+        String[] options = {"Yes", "No"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Are you sure to delete");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) {
+                    deletePost(id);
+                    Toast.makeText(context, "deleted", Toast.LENGTH_LONG).show();
+                }
+                if (which == 1) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.create().show();
+    }
+
+    private void deletePost(final String post_id) {
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Posts").child(post_id);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot ds : dataSnapshot.getChildren())
+                {
+                    ds.getRef().removeValue();
+                    Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+                Toast.makeText(context, "Failed to delete", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }
