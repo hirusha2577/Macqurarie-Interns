@@ -1,23 +1,69 @@
 package com.example.macqurarieinterns;
 
+import static com.example.macqurarieinterns.Function.MyIntent.moveActivity;
+
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
+import com.example.macqurarieinterns.Model.JobCategory;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.Objects;
 
-import static com.example.macqurarieinterns.Function.MyIntent.moveActivity;
-
 public class AdminJobCategoryActivity extends AppCompatActivity {
-    private ImageButton confirm;
+    // EditText and buttons.
+    private EditText job_type;
+    private Button btn_add;
+
+    // creating a variable for our
+    // Firebase Database.
+    FirebaseDatabase firebaseDatabase;
+
+    // creating a variable for our Database
+    // Reference for Firebase.
+    DatabaseReference databaseReference;
+
+    // creating a variable for
+    // our object class
+    JobCategory jobType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_job_category);
+
+        job_type=findViewById(R.id.job_type);
+        btn_add=findViewById(R.id.btn_add);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        databaseReference = firebaseDatabase.getReference("JobCategory");
+
+        jobType=new JobCategory();
+
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String job_cat=job_type.getText().toString();
+                if (TextUtils.isEmpty(job_cat)){
+                    Toast.makeText(AdminJobCategoryActivity.this, "Please add Job Category.", Toast.LENGTH_SHORT).show();
+                }else{
+                    addJobCategory(job_cat);
+                }
+            }
+        });
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -31,16 +77,46 @@ public class AdminJobCategoryActivity extends AppCompatActivity {
 
         });
 
-        confirm = findViewById(R.id.confirm);
 
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AdminJobCategoryActivity.this, AdminJobCategoryActivity.class);
-                startActivity(intent);
-            }
-
-        });
 
     }
+    private void addJobCategory(String job_category){
+
+        final String timestamp = String.valueOf(System.currentTimeMillis());
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("id", timestamp);
+        hashMap.put("name", job_category);
+
+
+        databaseReference.child(timestamp).setValue(hashMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(AdminJobCategoryActivity.this, "Job Category Added Successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(AdminJobCategoryActivity.this, "Failed!"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+//        jobType.setName(job_category);
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                databaseReference.setValue(jobType);
+//                Toast.makeText(AdminJobCategoryActivity.this, "data added", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(AdminJobCategoryActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+
+    }
+
 }
