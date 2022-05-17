@@ -70,35 +70,44 @@ public class AdminLoginActivity extends AppCompatActivity {
     }
         private void adminLogin(final String txt_email,final String txt_password) {
 
-            auth.signInWithEmailAndPassword(txt_email,txt_password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Admin").child(auth.getCurrentUser().getUid()).child("status");
-                            reference.addValueEventListener(new ValueEventListener() {
+//            Toast.makeText(AdminLoginActivity.this, txt_email +" "+txt_password, Toast.LENGTH_SHORT).show();
+            auth.signInWithEmailAndPassword(txt_email, txt_password)
+                    .addOnCompleteListener(
+                            new OnCompleteListener<AuthResult>() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(snapshot.getValue().equals("0")){
-                                        if(task.isSuccessful()){
-                                            Intent intent = new Intent(AdminLoginActivity.this, MainActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            startActivity(intent);
-                                            finish();
-                                        }else {
-                                            Toast.makeText(AdminLoginActivity.this, "Authentication failed!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }else{
-                                        Toast.makeText(AdminLoginActivity.this, "Have not Accepted The Registration", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                                public void onComplete(
+                                        @NonNull Task<AuthResult> task)
+                                {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Login successful!!",
+                                                Toast.LENGTH_LONG)
+                                                .show();
 
+                                        // hide the progress bar
+
+                                        // if sign-in is successful
+                                        Intent intent = new Intent(AdminLoginActivity.this, AdminMainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+                                    else {
+
+                                        // sign-in failed
+                                        Toast.makeText(getApplicationContext(),
+                                                "Login failed!!",
+                                                Toast.LENGTH_LONG)
+                                                .show();
+
+                                        // hide the progress bar
+                                    }
                                 }
                             });
 
-                        }
-                    });
+
 
         }
 }
