@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.macqurarieinterns.Model.Company;
 import com.example.macqurarieinterns.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -44,6 +46,8 @@ public class PendingCompanyAdapter extends RecyclerView.Adapter<PendingCompanyAd
 
 
 //        Company company=list.get(position);
+        String id=list.get(position).getId();
+
         String status = list.get(position).getStatus();
 
 
@@ -70,7 +74,10 @@ public class PendingCompanyAdapter extends RecyclerView.Adapter<PendingCompanyAd
             holder.confirmBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("Company").child(id);
+                    mPostReference.child("status").setValue("1");
                     Toast.makeText(context, "Company Name :"+uname+" is Confirmed", Toast.LENGTH_SHORT).show();
+
                 }
             });
             holder.rejectBtn.setOnClickListener(new View.OnClickListener() {
