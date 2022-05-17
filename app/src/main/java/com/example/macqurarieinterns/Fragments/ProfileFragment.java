@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.macqurarieinterns.AboutActivity;
 import com.example.macqurarieinterns.Adapter.PostAdapter;
+import com.example.macqurarieinterns.CompanyEditProfileActivity;
 import com.example.macqurarieinterns.MainActivity;
 import com.example.macqurarieinterns.Model.Company;
 import com.example.macqurarieinterns.Model.Post;
@@ -214,8 +215,14 @@ public class ProfileFragment extends Fragment  {
         edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), StudentEditProfileActivity.class);
-                startActivity(intent);
+
+                if(userType.equals("company")){
+                    Intent intent = new Intent(getContext(), CompanyEditProfileActivity.class);
+                    startActivity(intent);
+                }else{
+                    Intent intent1 = new Intent(getContext(), StudentEditProfileActivity.class);
+                    startActivity(intent1);
+                }
             }
         });
 
