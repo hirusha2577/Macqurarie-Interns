@@ -20,231 +20,222 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/applyList"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@color/white"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="6dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/profile" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:text="Associate Software Engineer"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="2dp"
+                            android:text="Colombo, Western, Sri Lanka (Hybrid)"
+                            android:textSize="15sp" />
 
 
+                    </LinearLayout>
 
-            </androidx.recyclerview.widget.RecyclerView>
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-<!--            <RelativeLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                android:background="@color/white"-->
-<!--                android:padding="10dp">-->
+                        <ImageButton
+                            android:id="@+id/edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="3dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:src="@drawable/ic_pen_black" />
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <de.hdodenhof.circleimageview.CircleImageView-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="40dp"-->
-<!--                        android:layout_marginTop="6dp"-->
-<!--                        android:scaleType="centerCrop"-->
-<!--                        android:src="@mipmap/profile" />-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="5"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginLeft="8dp"-->
-<!--                            android:text="Associate Software Engineer"-->
-<!--                            android:textColor="@color/black"-->
-<!--                            android:textSize="18sp"-->
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginLeft="8dp"-->
-<!--                            android:layout_marginTop="2dp"-->
-<!--                            android:text="Colombo, Western, Sri Lanka (Hybrid)"-->
-<!--                            android:textSize="15sp" />-->
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:src="@drawable/ic_clear_black" />
+                    </LinearLayout>
 
 
-<!--                    </LinearLayout>-->
+                </LinearLayout>
 
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:orientation="vertical">-->
+            </RelativeLayout>
 
-<!--                        <ImageButton-->
-<!--                            android:id="@+id/edit"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginBottom="3dp"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:background="@null"-->
-<!--                            android:src="@drawable/ic_pen_black" />-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@color/white"
+                android:padding="10dp">
 
-<!--                        <ImageButton-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="3dp"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:background="@null"-->
-<!--                            android:src="@drawable/ic_clear_black" />-->
-<!--                    </LinearLayout>-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="6dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/profile2" />
 
-<!--                </LinearLayout>-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:orientation="vertical">
 
-<!--            </RelativeLayout>-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:text="Software Engineer- Trainee"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-<!--            <RelativeLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                android:background="@color/white"-->
-<!--                android:padding="10dp">-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <de.hdodenhof.circleimageview.CircleImageView-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="40dp"-->
-<!--                        android:layout_marginTop="6dp"-->
-<!--                        android:scaleType="centerCrop"-->
-<!--                        android:src="@mipmap/profile2" />-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="5"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginLeft="8dp"-->
-<!--                            android:text="Software Engineer- Trainee"-->
-<!--                            android:textColor="@color/black"-->
-<!--                            android:textSize="18sp"-->
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginLeft="8dp"-->
-<!--                            android:layout_marginTop="2dp"-->
-<!--                            android:text="Colombo, Western, Sri Lanka (Hybrid)"-->
-<!--                            android:textSize="15sp" />-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="2dp"
+                            android:text="Colombo, Western, Sri Lanka (Hybrid)"
+                            android:textSize="15sp" />
 
 
-<!--                    </LinearLayout>-->
+                    </LinearLayout>
 
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:orientation="vertical">-->
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-<!--                        <ImageButton-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginBottom="3dp"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:background="@null"-->
-<!--                            android:src="@drawable/ic_pen_black" />-->
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="3dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:src="@drawable/ic_pen_black" />
 
-<!--                        <ImageButton-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="3dp"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:background="@null"-->
-<!--                            android:src="@drawable/ic_clear_black" />-->
-<!--                    </LinearLayout>-->
-
-
-<!--                </LinearLayout>-->
-
-<!--            </RelativeLayout>-->
-
-<!--            <RelativeLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                android:background="@color/white"-->
-<!--                android:padding="10dp">-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <de.hdodenhof.circleimageview.CircleImageView-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="40dp"-->
-<!--                        android:layout_marginTop="6dp"-->
-<!--                        android:scaleType="centerCrop"-->
-<!--                        android:src="@mipmap/profile" />-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="5"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginLeft="8dp"-->
-<!--                            android:text="Tech Lead - Kotlin"-->
-<!--                            android:textColor="@color/black"-->
-<!--                            android:textSize="18sp"-->
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginLeft="8dp"-->
-<!--                            android:layout_marginTop="2dp"-->
-<!--                            android:text="Colombo, Western, Sri Lanka (Hybrid)"-->
-<!--                            android:textSize="15sp" />-->
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:src="@drawable/ic_clear_black" />
+                    </LinearLayout>
 
 
-<!--                    </LinearLayout>-->
+                </LinearLayout>
 
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:orientation="vertical">-->
+            </RelativeLayout>
 
-<!--                        <ImageButton-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginBottom="3dp"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:background="@null"-->
-<!--                            android:src="@drawable/ic_pen_black" />-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@color/white"
+                android:padding="10dp">
 
-<!--                        <ImageButton-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="3dp"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:background="@null"-->
-<!--                            android:src="@drawable/ic_clear_black" />-->
-<!--                    </LinearLayout>-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="6dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/profile" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:text="Tech Lead - Kotlin"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="2dp"
+                            android:text="Colombo, Western, Sri Lanka (Hybrid)"
+                            android:textSize="15sp" />
 
 
-<!--                </LinearLayout>-->
+                    </LinearLayout>
 
-<!--            </RelativeLayout>-->
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="3dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:src="@drawable/ic_pen_black" />
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:src="@drawable/ic_clear_black" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
 
         </LinearLayout>
