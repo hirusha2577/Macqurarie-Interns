@@ -38,6 +38,7 @@
                     android:layout_marginRight="40dp"
                     android:text="Number of students in the university"/>
                 <TextView
+                    android:id="@+id/avaialable"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
@@ -58,6 +59,7 @@
                     android:layout_marginRight="40dp"
                     android:text="Number of active students"/>
                 <TextView
+                    android:id="@+id/active"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
@@ -81,6 +83,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
                 <TextView
+                    android:id="@+id/percentage"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
