@@ -132,7 +132,6 @@ public class AdminJobCategoryActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(AdminJobCategoryActivity.this, "Job Category Added Successfully!", Toast.LENGTH_SHORT).show();
                         finish();
                         startActivity(getIntent());
                     }

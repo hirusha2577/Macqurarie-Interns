@@ -1,6 +1,7 @@
 package com.example.macqurarieinterns.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.macqurarieinterns.AdminUpdateJobCategory;
 import com.example.macqurarieinterns.Model.JobCategory;
 import com.example.macqurarieinterns.R;
 import com.google.firebase.database.DatabaseReference;
@@ -51,6 +53,7 @@ public class JobCategoryAdapter extends RecyclerView.Adapter<JobCategoryAdapter.
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+intentPass(id,name);
 
             }
         });
@@ -65,7 +68,12 @@ public class JobCategoryAdapter extends RecyclerView.Adapter<JobCategoryAdapter.
 
 
     }
-
+public void intentPass(String id,String Name){
+    Intent intent = new Intent(context, AdminUpdateJobCategory.class);
+    intent.putExtra("id", id);
+    intent.putExtra("name", Name);
+    context.startActivity(intent);
+}
     @Override
     public int getItemCount() {
         return list.size();
