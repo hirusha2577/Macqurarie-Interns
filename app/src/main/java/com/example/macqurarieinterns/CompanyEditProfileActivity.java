@@ -105,12 +105,54 @@ public class CompanyEditProfileActivity extends AppCompatActivity {
             }
         });
 
-
-
+        password_edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String txt_password1 = password1.getText().toString();
+                String txt_password2 = password2.getText().toString();
+                String txt_password3 = password3.getText().toString();
+                if(TextUtils.isEmpty(txt_password1) || TextUtils.isEmpty(txt_password2) || TextUtils.isEmpty(txt_password3) ){
+                    Toast.makeText(CompanyEditProfileActivity.this, "All filed are required", Toast.LENGTH_SHORT).show();
+                } else if(!txt_password1.equals(txt_password2) ){
+                    Toast.makeText(CompanyEditProfileActivity.this, "new password and confirm password not mach", Toast.LENGTH_SHORT).show();
+                } else if (txt_password1.length() < 6){
+                    Toast.makeText(CompanyEditProfileActivity.this, "Password must be least 6 characters", Toast.LENGTH_SHORT).show();
+                }else {
+                    ChangePassword(txt_password1,txt_password3);
+                }
+            }
+        });
 
     }
 
 
+    private void ChangePassword(String password1,String password3) {
+
+        AuthCredential credential = EmailAuthProvider
+                .getCredential(company.getEmail(), password3);
+        firebaseUser.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "User re-authenticated.");
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        user.updatePassword(password1)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(CompanyEditProfileActivity.this, "Password change successfully", Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "User password updated.");
+                                            moveActivity(CompanyEditProfileActivity.this, CompanyLoginActivity.class);
+                                        }else{
+                                            Toast.makeText(CompanyEditProfileActivity.this, "wrong current Password", Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "wrong current Password");
+                                        }
+                                    }
+                                });
+                    }
+                });
+    }
 
 
 
