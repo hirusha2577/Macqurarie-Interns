@@ -3,6 +3,15 @@ package com.example.macqurarieinterns.Model;
 public class JobCategory {
     String category_id;
     String name;
+    public JobCategory(){
+
+    }
+    public JobCategory(String category_id, String name) {
+        this.category_id = category_id;
+        this.name = name;
+    }
+
+
 
     public String getCategory_id() {
         return category_id;
