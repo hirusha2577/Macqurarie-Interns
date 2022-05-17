@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.macqurarieinterns.Model.JobCategory;
 import com.example.macqurarieinterns.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -40,6 +42,8 @@ public class JobCategoryAdapter extends RecyclerView.Adapter<JobCategoryAdapter.
     @Override
     public void onBindViewHolder(@NonNull JobCategoryViewholder holder, int position) {
 
+
+        String id=list.get(position).getId();
         String name = list.get(position).getName();
 
         holder.name.setText(name);
@@ -47,13 +51,15 @@ public class JobCategoryAdapter extends RecyclerView.Adapter<JobCategoryAdapter.
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
+
             }
         });
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show();
+                DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("JobCategory").child(id);
+                mPostReference.removeValue();
+                Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
             }
         });
 
