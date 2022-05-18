@@ -11,6 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -189,7 +195,6 @@
             android:layout_marginTop="20dp"
             android:background="@color/silver_line"/>
 
-<!--            POST-->
             <LinearLayout
                 android:id="@+id/tab_post"
                 android:layout_width="match_parent"
@@ -281,21 +286,20 @@
                     android:background="@color/silver"/>
 
 
-                <!-- post -->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_posts"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/linearLayout"/>
+
 
 
             </LinearLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_posts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/linearLayout"/>
+
+
         </LinearLayout>
-
-
-
-
+        </RelativeLayout>
 
     </ScrollView>
 
