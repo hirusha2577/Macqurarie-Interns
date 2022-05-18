@@ -1,6 +1,7 @@
 package com.example.macqurarieinterns.Model;
 
 public class Student {
+    private String id;
     private String studentId;
     private String student_id;
     private String name;
@@ -168,6 +169,13 @@ public class Student {
 
     public void setAbout(String about) {
         this.about = about;
+    }
+
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
     
 }
