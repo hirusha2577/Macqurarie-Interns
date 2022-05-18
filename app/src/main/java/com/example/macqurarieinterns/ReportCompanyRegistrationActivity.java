@@ -7,13 +7,20 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.macqurarieinterns.Adapter.PostAdapter;
+import com.example.macqurarieinterns.Model.Company;
+import com.example.macqurarieinterns.Model.Post;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -21,10 +28,8 @@ import static com.example.macqurarieinterns.Function.MyIntent.moveActivity;
 
 public class ReportCompanyRegistrationActivity extends AppCompatActivity {
 
-    private TextView requested, rejected, accepted, percentage;
-    private long requested_count, rejected_count, accepted_count, percentage_count;
-
-    String txt_requested;
+    private TextView requested, rejected, accepted, pending;
+    private  int requested_count, rejected_count, accepted_count, pending_count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +50,15 @@ public class ReportCompanyRegistrationActivity extends AppCompatActivity {
         requested = findViewById(R.id.requested);
         rejected = findViewById(R.id.rejected);
         accepted = findViewById(R.id.accepted);
-        percentage = findViewById(R.id.percentage);
+        pending = findViewById(R.id.pending);
 
-//      System.out.println("/////////////////////////////////////////////////////////////");
-//        System.out.println(txt_requested);
-//        System.out.println("/////////////////////////////////////////////////////////////");
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Company").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                 long count= dataSnapshot.getChildrenCount();
-                 requested.setText(Long.toString(count));
-                 txt_requested = Long.toString(count);
+                  requested_count= (int)dataSnapshot.getChildrenCount();
+                  requested.setText(String.valueOf(requested_count));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -66,15 +66,14 @@ public class ReportCompanyRegistrationActivity extends AppCompatActivity {
             }
         });
 
-
         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("Company");
         Query query = databaseReference1.orderByChild("status").equalTo("2");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                long count= dataSnapshot.getChildrenCount();
-                rejected.setText(Long.toString(count));
+                rejected_count = (int)dataSnapshot.getChildrenCount();
+                rejected.setText(String.valueOf(rejected_count));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -88,8 +87,23 @@ public class ReportCompanyRegistrationActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                long count= dataSnapshot.getChildrenCount();
-                accepted.setText(Long.toString(count));
+                accepted_count = (int)dataSnapshot.getChildrenCount();
+                accepted.setText(String.valueOf(accepted_count));
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        DatabaseReference databaseReference3 = FirebaseDatabase.getInstance().getReference("Company");
+        Query query2 = databaseReference3.orderByChild("status").equalTo("0");
+        query2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                pending_count = (int)dataSnapshot.getChildrenCount();
+                pending.setText(String.valueOf(pending_count));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -98,4 +112,5 @@ public class ReportCompanyRegistrationActivity extends AppCompatActivity {
         });
 
     }
+
 }
