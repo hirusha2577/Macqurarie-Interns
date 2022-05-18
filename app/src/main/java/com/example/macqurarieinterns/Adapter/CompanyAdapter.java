@@ -83,12 +83,12 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.companyV
     public int getItemCount() {
         return list.size();
     }
+    //Used To Switch Between activities within the adapter class
     public void intentPass(){
         Intent intent = new Intent(context, AdminCompanyRegisterRequestActivity.class);
         context.startActivity(intent);
     }
-    // Sub Class to create references of the views in Crad
-    // view (here "person.xml")
+
     class companyViewholder
             extends RecyclerView.ViewHolder {
         TextView company_name,deactivateBtn;
