@@ -1,6 +1,7 @@
 package com.example.macqurarieinterns.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.macqurarieinterns.AdminCompanyActivity;
+import com.example.macqurarieinterns.AdminCompanyRegisterRequestActivity;
 import com.example.macqurarieinterns.Model.Company;
 import com.example.macqurarieinterns.R;
 import com.google.firebase.database.DatabaseReference;
@@ -77,13 +80,17 @@ public class PendingCompanyAdapter extends RecyclerView.Adapter<PendingCompanyAd
                     DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("Company").child(id);
                     mPostReference.child("status").setValue("1");
                     Toast.makeText(context, "Company Name :"+uname+" is Confirmed", Toast.LENGTH_SHORT).show();
+                    intentPass();
 
                 }
             });
             holder.rejectBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("Company").child(id);
+                    mPostReference.child("status").setValue("2");
                     Toast.makeText(context, "Company Name :"+uname+" is Rejected", Toast.LENGTH_SHORT).show();
+                    intentPassRecursion();
                 }
             });
 
@@ -97,7 +104,14 @@ public class PendingCompanyAdapter extends RecyclerView.Adapter<PendingCompanyAd
     public int getItemCount() {
         return list.size();
     }
-
+    public void intentPass(){
+        Intent intent = new Intent(context, AdminCompanyActivity.class);
+        context.startActivity(intent);
+    }
+    public void intentPassRecursion(){
+        Intent intent = new Intent(context, AdminCompanyRegisterRequestActivity.class);
+        context.startActivity(intent);
+    }
     // Sub Class to create references of the views in Crad
     // view (here "person.xml")
     class PendingCompanyViewholder

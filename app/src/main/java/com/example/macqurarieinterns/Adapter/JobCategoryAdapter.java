@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.macqurarieinterns.AdminJobCategoryActivity;
 import com.example.macqurarieinterns.AdminUpdateJobCategory;
 import com.example.macqurarieinterns.Model.JobCategory;
 import com.example.macqurarieinterns.R;
@@ -53,7 +54,7 @@ public class JobCategoryAdapter extends RecyclerView.Adapter<JobCategoryAdapter.
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-intentPass(id,name);
+            intentPass(id,name);
 
             }
         });
@@ -63,6 +64,7 @@ intentPass(id,name);
                 DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("JobCategory").child(id);
                 mPostReference.removeValue();
                 Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+                intentPass2();
             }
         });
 
@@ -74,6 +76,11 @@ public void intentPass(String id,String Name){
     intent.putExtra("name", Name);
     context.startActivity(intent);
 }
+    public void intentPass2(){
+        Intent intent = new Intent(context, AdminJobCategoryActivity.class);
+
+        context.startActivity(intent);
+    }
     @Override
     public int getItemCount() {
         return list.size();
