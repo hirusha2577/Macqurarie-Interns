@@ -33,11 +33,11 @@
                 app:met_floatingLabel="normal" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/id"
+                android:id="@+id/nic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="@string/student_id"
+                android:hint="@string/nic"
                 app:met_floatingLabel="normal" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:inputType="textEmailAddress"
-                android:hint="@string/nic"
+                android:hint="@string/email"
                 app:met_floatingLabel="normal" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
@@ -58,23 +58,8 @@
                 android:hint="Phone"
                 app:met_floatingLabel="normal" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:inputType="text"
-                android:hint="@string/address"
-                app:met_floatingLabel="normal" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/company_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:inputType="text"
-                android:hint="@string/dob"
-                app:met_floatingLabel="normal" />
+
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/current_password"
@@ -82,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:inputType="textPassword"
-                android:hint="@string/email"
+                android:hint="Current Password"
                 app:met_floatingLabel="normal" />
 
             <Button

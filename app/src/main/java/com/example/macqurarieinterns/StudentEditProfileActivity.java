@@ -1,21 +1,17 @@
 package com.example.macqurarieinterns;
 
-import static android.content.ContentValues.TAG;
-import static com.example.macqurarieinterns.Function.MyIntent.moveActivity;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.macqurarieinterns.Model.Company;
 import com.example.macqurarieinterns.Model.Student;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,16 +29,18 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static android.content.ContentValues.TAG;
+import static com.example.macqurarieinterns.Function.MyIntent.moveActivity;
+
 public class StudentEditProfileActivity extends AppCompatActivity {
 
-    private MaterialEditText name,student_id,nic, email, phone,current_password, password1, password2, password3;
+    private MaterialEditText name, email, phone, nic, current_password, password1, password2, password3;
     private Button edit_btn, password_edit_btn;
 
     DatabaseReference databaseReference;
     FirebaseUser firebaseUser;
     Student student;
 
-    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +60,6 @@ public class StudentEditProfileActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         name = findViewById(R.id.name);
-        student_id = findViewById(R.id.student_id);
         nic = findViewById(R.id.nic);
         email = findViewById(R.id.email);
         phone = findViewById(R.id.phone);
@@ -73,19 +70,17 @@ public class StudentEditProfileActivity extends AppCompatActivity {
         edit_btn = findViewById(R.id.edit_btn);
         password_edit_btn = findViewById(R.id.password_edit_btn);
 
+
         databaseReference = FirebaseDatabase.getInstance().getReference("Student").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 student = dataSnapshot.getValue(Student.class);
                 name.setText(student.getName());
-                student_id.setText(student.getSID());
                 nic.setText(student.getNIC());
                 email.setText(student.getEmail());
                 phone.setText(student.getPhone());
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -96,18 +91,17 @@ public class StudentEditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String txt_name = name.getText().toString();
-                String txt_student_id = student_id.getText().toString();
-                String txt_nic = nic.getText().toString();
+                String txt_student_id = nic.getText().toString();
                 String txt_email = email.getText().toString();
                 String txt_phone = phone.getText().toString();
                 String txt_current_password = current_password.getText().toString();
 
-                if (TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_student_id) || TextUtils.isEmpty(txt_nic) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_phone)) {
+                if (TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_student_id)  || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_phone)) {
                     Toast.makeText(StudentEditProfileActivity.this, "All filed are required", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(txt_current_password)) {
                     Toast.makeText(StudentEditProfileActivity.this, "Enter Current Password", Toast.LENGTH_SHORT).show();
                 } else {
-                    EditProfile(txt_name, txt_student_id,txt_nic,txt_email, txt_phone, txt_current_password);
+                    EditProfile(txt_name, txt_student_id, txt_email, txt_phone, txt_current_password);
                 }
             }
         });
@@ -118,22 +112,23 @@ public class StudentEditProfileActivity extends AppCompatActivity {
                 String txt_password1 = password1.getText().toString();
                 String txt_password2 = password2.getText().toString();
                 String txt_password3 = password3.getText().toString();
-                if(TextUtils.isEmpty(txt_password1) || TextUtils.isEmpty(txt_password2) || TextUtils.isEmpty(txt_password3) ){
+                if (TextUtils.isEmpty(txt_password1) || TextUtils.isEmpty(txt_password2) || TextUtils.isEmpty(txt_password3)) {
                     Toast.makeText(StudentEditProfileActivity.this, "All filed are required", Toast.LENGTH_SHORT).show();
-                } else if(!txt_password1.equals(txt_password2) ){
+                } else if (!txt_password1.equals(txt_password2)) {
                     Toast.makeText(StudentEditProfileActivity.this, "new password and confirm password not mach", Toast.LENGTH_SHORT).show();
-                } else if (txt_password1.length() < 6){
+                } else if (txt_password1.length() < 6) {
                     Toast.makeText(StudentEditProfileActivity.this, "Password must be least 6 characters", Toast.LENGTH_SHORT).show();
-                }else {
-                    ChangePassword(txt_password1,txt_password3);
+                } else {
+                    ChangePassword(txt_password1, txt_password3);
                 }
             }
         });
 
+
     }
 
 
-    private void ChangePassword(String password1,String password3) {
+    private void ChangePassword(String password1, String password3) {
 
         AuthCredential credential = EmailAuthProvider
                 .getCredential(student.getEmail(), password3);
@@ -151,7 +146,7 @@ public class StudentEditProfileActivity extends AppCompatActivity {
                                             Toast.makeText(StudentEditProfileActivity.this, "Password change successfully", Toast.LENGTH_SHORT).show();
                                             Log.d(TAG, "User password updated.");
                                             moveActivity(StudentEditProfileActivity.this, StudentLoginActivity.class);
-                                        }else{
+                                        } else {
                                             Toast.makeText(StudentEditProfileActivity.this, "wrong current Password", Toast.LENGTH_SHORT).show();
                                             Log.d(TAG, "wrong current Password");
                                         }
@@ -162,15 +157,13 @@ public class StudentEditProfileActivity extends AppCompatActivity {
     }
 
 
-
-    private void EditProfile(String name, String student_id, String nic, String email, String phone, String password) {
+    private void EditProfile(String name, String student_id, String email, String phone, String password) {
 
         if (student.getEmail().equals(email)) {
             databaseReference = FirebaseDatabase.getInstance().getReference("Student").child(firebaseUser.getUid());
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("name", name);
-            hashMap.put("student_id", student_id);
-            hashMap.put("nic", nic);
+            hashMap.put("nic", student_id);
             hashMap.put("email", email);
             hashMap.put("phone", phone);
             databaseReference.updateChildren(hashMap);
@@ -180,8 +173,7 @@ public class StudentEditProfileActivity extends AppCompatActivity {
             databaseReference = FirebaseDatabase.getInstance().getReference("Student").child(firebaseUser.getUid());
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("name", name);
-            hashMap.put("student_id", student_id);
-            hashMap.put("nic", nic);
+            hashMap.put("nic", student_id);
             hashMap.put("email", email);
             hashMap.put("phone", phone);
             databaseReference.updateChildren(hashMap);
@@ -213,7 +205,6 @@ public class StudentEditProfileActivity extends AppCompatActivity {
         }
 
     }
-
 
 
 }
