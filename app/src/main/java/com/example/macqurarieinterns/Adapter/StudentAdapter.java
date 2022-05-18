@@ -86,8 +86,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.studentV
         Intent intent = new Intent(context, AdminStudentActivity.class);
         context.startActivity(intent);
     }
-    // Sub Class to create references of the views in Crad
-    // view (here "person.xml")
     class studentViewholder
             extends RecyclerView.ViewHolder {
         TextView student_name,deactivateBtn;

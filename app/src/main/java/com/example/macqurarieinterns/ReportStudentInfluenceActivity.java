@@ -31,7 +31,7 @@ public class ReportStudentInfluenceActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Vacancy");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("VacancyApply");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

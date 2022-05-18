@@ -86,8 +86,7 @@ public void intentPass(String id,String Name){
         return list.size();
     }
 
-    // Sub Class to create references of the views in Crad
-    // view (here "person.xml")
+
     class JobCategoryViewholder
             extends RecyclerView.ViewHolder {
         ImageButton editBtn,deleteBtn;
