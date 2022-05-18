@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -26,8 +27,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -42,10 +46,9 @@ public class JobInterviewCreateActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener timeSetListener;
     int hour, minute;
 
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
-    String companyID;
+    private FirebaseAuth firebaseAuth;
+    String id, company_id, vacancy_id, student_id;
 
     ProgressDialog pd;
 
@@ -56,10 +59,12 @@ public class JobInterviewCreateActivity extends AppCompatActivity {
 
         pd = new ProgressDialog(this);
 
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
+        company_id = intent.getStringExtra("company_id");
+        vacancy_id = intent.getStringExtra("vacancy_id");
+        student_id = intent.getStringExtra("student_id");
 
-
-        firebaseUser = firebaseAuth.getInstance().getCurrentUser();
-        companyID = firebaseUser.getUid();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,6 +83,8 @@ public class JobInterviewCreateActivity extends AppCompatActivity {
         closing_time = findViewById(R.id.closing_time);
         Place = findViewById(R.id.Place);
         dis = findViewById(R.id.dis);
+
+
 
         closing_date.setOnClickListener(new View.OnClickListener() {
 
@@ -163,8 +170,9 @@ public class JobInterviewCreateActivity extends AppCompatActivity {
         final String timestamp = String.valueOf(System.currentTimeMillis());
 
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("company_id", companyID);
-        hashMap.put("student_id","123456789");
+        hashMap.put("company_id", company_id);
+        hashMap.put("student_id",student_id);
+        hashMap.put("vacancy_id",vacancy_id);
         hashMap.put("pTime",timestamp);
         hashMap.put("date", date);
         hashMap.put("time", time);
@@ -190,4 +198,7 @@ public class JobInterviewCreateActivity extends AppCompatActivity {
                 });
 
     }
+
+
+
 }

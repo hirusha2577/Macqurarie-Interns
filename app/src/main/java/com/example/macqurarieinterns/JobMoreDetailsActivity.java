@@ -25,16 +25,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.macqurarieinterns.Model.Student;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -51,8 +56,11 @@ public class JobMoreDetailsActivity extends AppCompatActivity {
     private RelativeLayout apply_card;
 
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
+    private FirebaseUser firebaseUser;
     private StorageReference storageReference;
-    private String student_id;
+
+    private String student_id, name, dp, year;
 
     private String user_type;
     Uri uri;
@@ -104,13 +112,30 @@ public class JobMoreDetailsActivity extends AppCompatActivity {
         date.setText(vacancy_date);
         description.setText(vacancy_description);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        student_id = firebaseUser.getUid();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Student").child( student_id);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                name = (String) dataSnapshot.child("name").getValue();
+                dp = (String) dataSnapshot.child("P_imageURL").getValue();
+                year = (String) dataSnapshot.child("r_stud_year").getValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+
         if (user_type.equals("student")) {
             apply_card.setVisibility(View.VISIBLE);
         }
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        student_id = firebaseUser.getUid();
+
 
         storageReference = FirebaseStorage.getInstance().getReference("cv");
 
@@ -245,6 +270,9 @@ public class JobMoreDetailsActivity extends AppCompatActivity {
                             hashMap.put("company_id", company_id);
                             hashMap.put("vacancy_id", vacancy_id);
                             hashMap.put("student_id", student_id);
+                            hashMap.put("student_name", name);
+                            hashMap.put("student_dp", dp);
+                            hashMap.put("student_year", year);
                             hashMap.put("cv", downloadUri);
 
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("VacancyApply");
